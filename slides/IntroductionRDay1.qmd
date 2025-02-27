@@ -97,7 +97,7 @@ Not a course on using R for statistics or bioinformatics
 
 # Basics of the R Language
 
-## R as a pocket calculator I {.smaller}
+## R as a pocket calculator I {.scrollable}
 
 Many mathematical operations (`+`,  `-`,  `*`,  `/`,  `^`/`**`) pre-defined
 
@@ -121,7 +121,7 @@ Compute $2^7$:
 
 ```
 
-## R as a pocket calculator II 
+## R as a pocket calculator II {.scrollable}
 
 Some operations based on functions: `sqrt`, `log`, `log2`, `log10`, `sum`, `prod`
 
@@ -185,7 +185,7 @@ For now, work with subset of titanic data set:
 titanic 
 ```
 
-## Data: columns and selections within a single column {.smaller}
+## Data: columns and selections within a single column {.smaller .scrollable}
 
 - Each column is a <span style="color:red;">vector</span> of values
 - Single column from data set selected via "`$`", e.g. `titanic$age`
@@ -196,19 +196,14 @@ Select age of passengers 6 and 10
 #| label: "age selections 6 and 10"
 titanic$age[6,10]    # gives an error
 titanic$age[c(6,10)] # c is function to combine values
-
-5:10               # numbers 5 to 10 
-seq(5,10,by=1)     # same
-
 ```
 
 Select age of passengers 6 to 10
 ```{webr-r}
 #| label: "selection of range in age column"
-titanic$age[c(6,7,8,9,10)] # c is function to combine values
-## faster way:
-5:10               # numbers 5 to 10 
-seq(5,10,by=1)     # same
+titanic$age[c(6,7,8,9,10)] 
+6:10               # faster way
+seq(6,10,by=1)     # same as 6:10
 titanic$age[6:10] 
 ```
 
@@ -216,10 +211,10 @@ Flexibility of `seq` function
 ```{webr-r}
 #| label: "more selections in age column"
 seq(1,10,by=2)     # only odd numbers
-## select the odd rows:
+## select age in the odd rows:
 ```
 
-## Data: selection of rows and columns
+## Data: selection of rows and columns {.smaller}
 
 - Via square brackets `dataset[rows, cols]`
 
@@ -227,34 +222,35 @@ seq(1,10,by=2)     # only odd numbers
 
 ```{webr-r}
 #| label: "selections in data"
-## first 6 rows and columns 2 and 4
-titanic[1:6, c(2,4)]
+## 2 rows and columns 3 and 1
+titanic[2:3, c(3,1)]
 ```
 
 Columns: selection by name
- ```{webr-r}
- titanic[c(2,3), c("name","age")]
- ```
+```{webr-r}
+ titanic[c(2,3), c("name","pclass")]
+```
 
 
-## Exercise 1 {.smaller}
+## Exercise 1 {.smaller .scrollable}
 
-- Create a vector named `vec` that consists of the numbers from 11 to 30
-- Select the 7th element of the vector
-- Select all elements except the 15th. Hint: use a minus sign
-- Select the 2nd and 5th element of the vector
-``` {webr-r}
+a. Create a vector named `vec` that consists of the numbers from 11 to 30
+b. Select the 7th element of the vector
+c. Select all elements except the 15th. Hint: use a minus sign
+d. Select the 2nd and 5th element of the vector
+```{webr-r}
 ## vec <- 
 
 ## vec[...]
 
 ```
-- Select only the odd valued elements of `vec`. 
+e. Select only the odd valued elements of `vec`. 
 
-  *Remark: This last one is not an easy exercise. We advise you to do this is in two
+  *Remark: Exercise e. is not an easy exercise. We advise you to do this is in two
   steps. First create a vector `index` that selects the odd numbers in `vec`, using the
   function `seq`. You may need to consult the help page of `seq` via `help(seq)`.*
-``` {webr-r}
+
+```{webr-r}
 ## select position of odd numbers in 11 to 30
 ## index <- 
 
@@ -263,6 +259,7 @@ Columns: selection by name
 
 
 ::: sol
+
 ## Exercise 1 (answer) {.smaller}
 
 - Create a vector named `vec` that consists of the numbers from 11 to 30
@@ -271,7 +268,7 @@ Columns: selection by name
 - Select the 2nd and 5th element of the vector
 - Select only the odd valued elements of `vec`.
 
-```
+```{.r}
 vec <- seq(11,30)
 vec[7]
 ## Use '-' to exclude elements
@@ -282,9 +279,10 @@ vec[c(2,5)]
 index <- seq(1,length(vec),by=2)
 vec[index]
 ```
+
 :::
 
-## Exercise 2 {.smaller}
+## Exercise 2 {.smaller .scrollable}
 
 Use the elementary functions `/`, `-`, `^` and the function `sum` to
     calculate the mean $$\bar{x}=\sum_{i=1}^n x_i/n$$ and the standard deviation
@@ -356,7 +354,7 @@ sd(fare)
     `patients, Data, abc, LetsHaveFun`
 - Names are case-sensitive: `Data` is not the same as `data`
 
-::: {.fragment .fade-in .highlight-current-red}
+::: {.fragment}
 - Not allowed:
   - space
   - characters with special meaning in R: "`@`", "`$`", "`+`" etc.
@@ -367,7 +365,7 @@ sd(fare)
   `sort, c, mean, t, data, q`
 :::
 
-::: {.fragment .fade-in .highlight-green}
+::: {.fragment}
 - "`_`" and "`.`" are allowed (e.g. `sorted.results_file`)
 
   Many prefer "`_`" over "`.`" to subdivide names
@@ -375,47 +373,19 @@ sd(fare)
 
 ## Remember
 
--   Everything that exists in R is an object (data, functions, ...)
--   Everything that happens in R is a function call
+::: {.callout-note title="Objects"}
+1. Everything that exists in R is an object (data, functions, ...)
 
-## Packages {.smaller}
-
-- Regular R users transform recurring tasks into self-made functions
-
-- Can make it into a <span style="color:red;">package</span>, i.e. a collection of
-    functions (and data):
-  - [survival](https://github.com/therneau/survival)
-  - [ggplot2](https://ggplot2.tidyverse.org/index.html)
-  - [tidyverse](https://www.tidyverse.org)
-  - [WHO TB data](https://github.com/seabbs/getTBinR)
-  - [SUSENAS](https://cran.r-project.org/web/packages/SUSENAS/index.html),
-  - [vietnameseConverter](https://cran.r-project.org/web/packages/vietnameseConverter/index.html),
-  - [sudoku](https://cran.r-project.org/web/packages/sudoku/index.html),
-  - [rStrava](https://cran.r-project.org/web/packages/rStrava/index.html)
-
--   Give package developers appropriate credit and [cite their
-    packages](https://ropensci.org/blog/2021/11/16/how-to-cite-r-and-r-packages/)
-	
-	
-## Packages, where to find them?
-
-- Objects created by others can be combined into a <span style="color:red;">package</span>
-  - [Comprehensive R Archive Network](https://cloud.r-project.org/web/packages/available_packages_by_name.html):
-    1000's of extra packages
-  - Many more on [GitHub](https://rdrr.io/find/?repos=cran%2Cbioc%2Crforge%2Cgithub&page=0&fuzzy_slug=) and [Bioconductor](https://www.bioconductor.org/packages/release/BiocViews.html#___Software)
-- R program itself also based on packages. Some loaded at startup 
-    *base*, *graphics*, *stats*, *utils* ...
-
-  E.g. *base* package contains `sqrt` function
-- Other packages need to be loaded before use via `library` function
+2. Everything that happens in R is a function call
+:::
 
 
-## Modes {.smaller}
+## Modes {.smaller .scrollable}
 
 - Data (variables) come in different types. The most important ones are:
   - *numeric*:
 ```{webr-r}
-c(1,2,3,4)
+seq(0,2,by=0.25)
 ```
   - *logical*: logical values `TRUE`, `FALSE`
 ```{webr-r}
@@ -427,28 +397,26 @@ letters
 ```
   - You can change the mode of many data objects
 ```{webr-r}
-as.character(1:4)
+as.character(seq(0,2,by=0.25))
 ```
 
-## Modes: logical (I) {.smaller}
+## Modes: logical (I) {.smaller .scrollable}
 
 - `TRUE` and `FALSE` can be used for selection
 ```{webr-r}
 #| label: logical mode Ia
+titanic$fare
 titanic$fare[c(TRUE,FALSE,TRUE,TRUE, FALSE, TRUE,FALSE,TRUE,TRUE, FALSE)] 
 ```
 
 - Logical statements arise from comparing numbers:
-
-  Less than/greater than: `<`, `>`, `<=`, `>=`
-
-  Exact equality: `==`
-
-  Not equal to: `!=`
+  - Smaller/larger than: `<`, `>`, `<=`, `>=`
+  - Exact equality: `==`
+  - Not equal to: `!=`
 ```{webr-r}
 #| label: logical mode Ib
 titanic$fare>40
-titanic$fare[titanic$fare>40]
+titanic$pclass[titanic$fare>40]
 ```
 - Converted to integer if a numeric value is required:
 
@@ -456,52 +424,61 @@ titanic$fare[titanic$fare>40]
   
 ```{webr-r}
 #| label: logical mode Ic
-sum(titanic$fare>40)
+sum(titanic$pclass=="1st")
 ```
 
 
-## Modes: logical (II) {.smaller}
+## Modes: logical (II) {.smaller .scrollable}
 
 You can calculate with logicals. Main operators are:
 
-- `&`: AND - all must be true
-- `|`: OR - at least one must be true
-- `!`: NOT - negation
+- `&`: all must be true "AND"
+- `|`: at least one must be true "OR"
+- `!`: negation "NOT"
 
-
+Logical calculations:
 ```{webr-r}
 TRUE & FALSE
 TRUE | FALSE
+!TRUE
 ```
 
+Logical statements about fare
 ```{webr-r}
 titanic$fare
 titanic$fare >10 & titanic$fare < 40
-titanic[titanic$fare >10 & titanic$fare < 40,"fare"]
+!(titanic$fare >10 | titanic$fare < 40)
 ```
 
-## Selection by name
-
+Select fares between 10 and 40
 ```{webr-r}
-teacher <- c("Ronald","Thinh","Tuyen")
-room <- c(306,305,305)
-names(room) <- teacher
-room
+
 ```
 
-```{webr-r}
-room["Ronald"]
-```
 
-- Same for selection of columns
- ```{webr-r}
- titanic[c(2,3),c("name","age")]
- ```
+
+<!-- ## Selection by name -->
+
+<!-- ```{webr-r} -->
+<!-- teacher <- c("Ronald","Thinh","Tuyen") -->
+<!-- room <- c(306,305,305) -->
+<!-- names(room) <- teacher -->
+<!-- room -->
+<!-- ``` -->
+
+<!-- ```{webr-r} -->
+<!-- room["Ronald"] -->
+<!-- ``` -->
+
+<!-- - Same for selection of columns -->
+<!--  ```{webr-r} -->
+<!--  titanic[c(2,3),c("name","age")] -->
+<!--  ``` -->
 
 
 # RStudio
 
-## R and RStudio {auto-animate="true"}
+## R and RStudio 
 
 ::: fragment
 **R** is a programming language for statistical computing and data visualization.
@@ -511,7 +488,7 @@ room["Ronald"]
 **RStudio** is a software designed to make working with R easier by helping you create, edit, and manage R code and projects. More formally, it is known as an Integrated Development Environment (IDE).
 :::
 
-## Create Project in RStudio {auto-animate="true"}
+## Create Project in RStudio 
 
 An **R project** is a directory with `.Rproj` file, signaling RStudio to manage the project settings accordingly.
 
@@ -527,33 +504,7 @@ The process of creating an R project is as followed
 -   Click **`Create Project`**
 :::
 
-## RStudio interface {auto-animate="true"}
-
-![](Figures/rstudio_components.png)
-
-## RStudio interface {auto-animate="true"}
-
-::: medium-text-size
-Consists of 4 main panes
-
--   **Source code**: Show the content of a source code file
-
--   **Console**: Show the executed code lines and their output
-
--   **Defined variables**: Show the currently defined variables
-
--   **Files/Plot/Package/Help**:
-
-    -   Files: for files nagivation
-
-    -   Plots: show plot output
-
-    -   Packages: show all the installed packages and packages being used (packages in use will have a ✓)
-
-    -   Help: show documentations for functions or packages
-:::
-
-## Project structure {auto-animate="true"}
+## Project structure 
 
 A minimal R project structure will have the following format
 
@@ -575,12 +526,72 @@ Where
 -   `analysis.R` is the file containing R code. There can be multiple `.R` files under 1 project.
 
 
-## Help {.smaller}
+
+## RStudio interface 
+
+![](Figures/rstudio_components.png)
+
+## RStudio interface 
+
+::: medium-text-size
+Consists of 4 main panes
+
+-   Upper left: Shows the content of source code file and of datasets in R session
+
+-   **Console**: Shows the executed code lines and their output
+
+-   **Environment**: Show the currently defined variables
+
+-   **Files/Plot/Package/Help/...**:
+
+    -   Files: for files nagivation
+
+    -   Plots: show plot output
+
+    -   Packages: show all the installed packages and packages being used (packages in use will have a ✓)
+
+    -   Help: show documentations for functions or packages
+:::
+
+
+## Packages {.smaller}
+
+- Regular R users transform recurring tasks into self-made functions
+
+- Can make it into a <span style="color:red;">package</span>, i.e. a collection of
+    functions (and data):
+  - [survival](https://github.com/therneau/survival)
+  - [ggplot2](https://ggplot2.tidyverse.org/index.html)
+  - [tidyverse](https://www.tidyverse.org)
+  - [WHO TB data](https://github.com/seabbs/getTBinR)
+  - [SUSENAS](https://cran.r-project.org/web/packages/SUSENAS/index.html),
+  - [vietnameseConverter](https://cran.r-project.org/web/packages/vietnameseConverter/index.html),
+  - [sudoku](https://cran.r-project.org/web/packages/sudoku/index.html),
+  - [rStrava](https://cran.r-project.org/web/packages/rStrava/index.html)
+
+-   Give package developers appropriate credit and [cite their packages](https://ropensci.org/blog/2021/11/16/how-to-cite-r-and-r-packages/)
+	
+	
+## Packages, where to find them?
+
+- Objects created by others 
+  - [Comprehensive R Archive Network](https://cloud.r-project.org/web/packages/available_packages_by_name.html):
+    1000's of extra packages
+  - Many more on [GitHub](https://rdrr.io/find/?repos=cran%2Cbioc%2Crforge%2Cgithub&page=0&fuzzy_slug=) and [Bioconductor](https://www.bioconductor.org/packages/release/BiocViews.html#___Software)
+- R program itself also based on packages. Some loaded at startup 
+    *base*, *graphics*, *stats*, *utils* ...
+
+  E.g. *base* package contains `sqrt` function
+- Other packages need to be loaded before use, best way is via `library` function
+
+
+
+## Help {.smaller .scrollable}
 
 - To know more about a function or dataset you can often use `help` function
 -  `help(mean)` gives
 
-**Description:**  *Generic function* for the (trimmed) arithmetic mean.
+**Description:**  <span style="color:red;">Generic function</span> for the (trimmed) arithmetic mean.
 
 **Usage:** mean(x, ...)
 
@@ -590,7 +601,7 @@ Where
 	 
 **Arguments:** 
 
-x: an R *object*. Currently there are *methods* for *numeric/logical vectors* and
+x: an R <span style="color:red;">object</span>. Currently there are <span style="color:red;">methods</span> for <span style="color:red;">numeric/logical vectors</span> and
 date, date-time and time interval objects.
 
 trim: ...
@@ -621,12 +632,12 @@ computed, as a numeric or complex vector of length one.
   -  via `File` menu, followed by the `Import Dataset` submenu
   - ASCII text file (`base` or `readr` package)
   - Excel (`readxl` package)
+    ```{.r}
+   library(readxl)
+   titanic <- read_excel("Data/Titanic3.xlsx")
+   ```
   - SPSS/Stata/SAS (`haven` package)
 
-    ```{.r}
-    library(haven)
-    titanic <- read_dta("Exercises/titanic3.dta")
-    ```
 
   - see [Importing Data with RStudio](https://support.posit.co/hc/en-us/articles/218611977-Importing-Data-with-RStudio)
   - Imported as a ["tibble"](https://github.com/tidyverse/tibble)
@@ -634,57 +645,88 @@ computed, as a numeric or complex vector of length one.
 
 -   Database: [MS Access, SQLite, ...](https://solutions.posit.co/connections/db/databases/)
 	
-
-## Lists {.smaller}
-
-- Modes cannot be mixed in vectors
-```{webr-r}
-teacher <- c("Ronald","Thinh","Tuyen")
-room <- c(306,305,305)
-c(teacher, room)
-```
-- Modes can be mixed in a list:
-
-```{webr-r}
-list(teacher, room)
-list(teacher = teacher, room = room)
-```
-Two *components*, with names `teacher` and `room` 
-
-- Data are of mode list, but with a special class `data.frame`
-```{webr-r}
-mode(titanic)
-class(titanic)
-```
-
-## Missing data
+## Missing data {.smaller}
 
 - Special value: `NA` (short for "not available")
   The function `is.na` checks for missingness
 
-  ```{.r}
-  table(is.na(titanic$age))
-  ```
+```{webr-r}
+table(titanic$age==NA) # not correct
+3==NA # NA value gives missing as output
+is.na(3)
+table(is.na(titanic$age))
+```
 
 - Within functions, missings are often excluded by default, *but not always*
   - `quantile` and `mean` give error if there are missings; specify argument
     `na.rm=TRUE` 
   - `table` excludes missings, include them via argument `useNA="always"`
+  
+## Data inspection and basic variable summaries {.smaller}
+
+- `View`: opens a spreadsheet-style data viewer
+
+   In RStudio: click on the name of an object in the **Environment** tab
+- `dim`: gives the number of rows and columns
+- `head`: shows the first rows of a data frame
+- `tail`: similar to `head` but shows the last rows
+- `str`: compact display of the internal structure of an R object
+
+Variable summaries
+
+- `summary`: concise summary of each variable
+- `mean`: mean value
+- `quantile`: quantiles
+- `IQR`: inter-quartile range
+
+## Make exercises 6, 7, 8, 9 and 10 {.scrollable}
+
+Package readxl needs to be installed (not sure whether it comes with RStudio)
+
+
+```{.r}
+#| label: "First data overview"
+library(readxl)
+titanic <- read_excel("Data/Titanic3.xlsx")
+
+dim(titanic)
+head(titanic[,1:4], n=4)
+tail(titanic[,1:4])
+str(titanic[,1:4])
+## dplyr::glimpse(titanic[,1:4])
+summary(titanic)
+quantile(titanic$age, prob=c(0.025,0.25,0.5,0.75,0.975)) # gives an error
+## some quantiles
+quantile(titanic$age, probs=c(0.05,0.25,0.5,0.75,0.95), na.rm=TRUE)
+## the IQR (note that this is a single number)
+IQR(titanic$age, na.rm=TRUE)
+## survival status
+table(titanic$survived)
+table(titanic$sex, titanic$survived)
+table(titanic$sex, titanic$survived, useNA="always") # has no added value
+addmargins(table(titanic$sex, titanic$survived))
+```
 
 ## More efficient row selections: "subset" 
 
 - `subset` function: `subset(my.data, subset=...)`,  with ... a logical condition:
 
 ```{.r}
-subset(titanic, pclass %in% c("1st","2nd"))
+subset(titanic, pclass %in% c("1st","2nd"))$survived
 ```
 
     `%in%` is another logical construct
 - `subset` argument in functions with *formula* structure:
 
 ```{.r}
-xtabs(~survived, data=as_factor(titanic), subset=(sex=="male"))	
+xtabs(~survived, data=titanic, subset=(sex=="male"))	
 ```
+::: {.callout-warning}
+- Don't use "`$`" for column selection if function has a data argument
+```{.r}
+xtabs(~titanic$survived, data=titanic, subset=(titanic$sex=="male"))	
+```
+:::
 
 
 ## More efficient column selections
@@ -709,4 +751,66 @@ xtabs(~survived, data=as_factor(titanic), subset=(sex=="male"))
   ## same as table(titanic$sex, titanic$survived)
   ```
 
-- Don't use "`$`" for column selection if function has a data argument
+
+## Extra structure to categorical variables: factors {.smaller}
+
+- Define the ordering of the "levels" (useful in regression models)
+  - Default is by alphabetical/numeric order
+    ```{.r}
+    table(titanic$sex)
+    ```
+  - Change the order 
+    ```{.r}
+    titanic$sex <- factor(titanic$sex)
+    levels(titanic$sex)
+    titanic$sex <- factor(titanic$sex, levels=c("male","female"))
+    table(titanic$sex)
+    ```
+  
+- To change naming of the levels
+  ```{.r}
+  titanic$sex <- factor(titanic$sex, labels=c("M","F"))
+  ```
+
+- [Good explanation](https://www.gormanalysis.com/blog/r-introduction-to-factors-tutorial)
+  
+## Dates
+
+- Numeric value (units since time origin) with character representation
+
+- Origin: 
+  - SPSS: October 14, 1582 (seconds)
+  - R: January 1st, 1970 (days)
+  - Stata: January 1st, 1960 (days)
+- R is very flexible in conversion between textual date representations
+- `as.Date`: create date variable
+ 
+  `format`: change display format
+   
+- See page 5 of this [reference card](http://cran.r-project.org/doc/contrib/Baggott-refcard-v2.pdf)
+
+
+
+## Lists {.smaller}
+
+- Modes cannot be mixed in vectors
+```{webr-r}
+teacher <- c("Ronald","Thinh","Tuyen")
+room <- c(306,305,305)
+c(teacher, room)
+```
+- Modes can be mixed in a list:
+
+```{webr-r}
+list(teacher, room)
+list(teacher = teacher, room = room)
+```
+Two *components*, with names `teacher` and `room` 
+
+- Data are of mode list, but with a special class `data.frame`
+```{webr-r}
+mode(titanic)
+class(titanic)
+```
+
+
