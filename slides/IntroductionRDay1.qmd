@@ -773,9 +773,9 @@ xtabs(~titanic$survived, data=titanic, subset=(titanic$sex=="male"))
   titanic$sex <- factor(titanic$sex, labels=c("M","F"))
   ```
 
-- [Good explanation](https://www.gormanalysis.com/blog/r-introduction-to-factors-tutorial)
+- [Good explanation](https://www.gormanalysis.com/blog/r-introduction-to-factors-tutorial){preview-link="true"}
   
-## Dates
+## Dates {.smaller}
 
 - Numeric value (units since time origin) with character representation
 
@@ -788,6 +788,6 @@ xtabs(~titanic$survived, data=titanic, subset=(titanic$sex=="male"))
  
   `format`: change display format
    
-- See page 5 of this [reference card](http://cran.r-project.org/doc/contrib/Baggott-refcard-v2.pdf)
+- See page 5 of this [reference card](http://cran.r-project.org/doc/contrib/Baggott-refcard-v2.pdf){target="_blank"}
 
 
