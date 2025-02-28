@@ -635,7 +635,7 @@ computed, as a numeric or complex vector of length one.
   - Excel (`readxl` package)
     ```{.r}
    library(readxl)
-   titanic <- read_excel("Data/Titanic3.xlsx")
+   titanic <- read_excel("data/Titanic3.xlsx")
    ```
   - SPSS/Stata/SAS (`haven` package)
 
@@ -688,7 +688,7 @@ Package readxl needs to be installed (not sure whether it comes with RStudio)
 ```{.r}
 #| label: "First data overview"
 library(readxl)
-titanic <- read_excel("Data/Titanic3.xlsx")
+titanic <- read_excel("data/Titanic3.xlsx")
 
 dim(titanic)
 head(titanic[,1:4], n=4)

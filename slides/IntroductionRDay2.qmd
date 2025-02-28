@@ -17,7 +17,7 @@ webr:
 format:
   revealjs:
     slide-number: true
-    logo: "Figures/OUCRU.jpg"
+    logo: "figures/OUCRU.jpg"
     preview-links: true
     theme: solarized
     transition: fade

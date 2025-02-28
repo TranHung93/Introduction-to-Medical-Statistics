@@ -18,7 +18,7 @@ webr:
 format:
   revealjs:
     slide-number: true
-    logo: "Figures/OUCRU.jpg"
+    logo: "figures/OUCRU.jpg"
     preview-links: auto
     theme: solarized
     show-slide-number: print
@@ -81,14 +81,14 @@ What information would you need to map each dot correctly onto this plot?
 code.r
 ```{r}
 #| eval: FALSE
-df <- readRDS("../data/nature_plot.rds")
+df <- readRDS("data/nature_plot.rds")
 head(df)
 ```
 :::
 
 ```{r}
 #| echo: FALSE
-df <- readRDS("../data/nature_plot.rds")
+df <- readRDS("data/nature_plot.rds")
 head(df)
 ```
 
