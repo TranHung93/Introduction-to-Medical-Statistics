@@ -518,5 +518,402 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 ```
 
 :::
+:::
 
-::::
+
+## Some frequently used `geom_*` 
+
+::: {.r-fit-text .scrolling style="height: 450px; padding:10px;overflow-y:scroll"}
+Histogram and bar charts
+
++--------------------+------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `geom_*`           | description                                                                                                                  | Parameters                                                                                                                                           |
++====================+==============================================================================================================================+======================================================================================================================================================+
+| `geom_histogram()` | Create a histogram where `x` is a continuous variable divided into `bins` and `y` is the count of observations in each `bin` | Required aesthetic: `x`                                                                                                                              |
+|                    |                                                                                                                              |                                                                                                                                                      |
+|                    |                                                                                                                              | Additional parameters:                                                                                                                               |
+|                    |                                                                                                                              |                                                                                                                                                      |
+|                    |                                                                                                                              | -   `bins` (number of bins to divide `x` into) [**or**]{.underline} `binwidth` (width of each bin)                                                   |
++--------------------+------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `geom_col()`       | Create a bar chart from given `x` and `y`                                                                                    | Required aesthetic: `x` and `y`                                                                                                                      |
++--------------------+------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `geom_bar()`       | Similar to `geom_col()` but only `x` or `y` is required, the other axis is computed based on the provided `stat` parameter   | Required aesthetic: `x` [**or**]{.underline} `y`                                                                                                     |
+|                    |                                                                                                                              |                                                                                                                                                      |
+|                    |                                                                                                                              | Additional parameters:                                                                                                                               |
+|                    |                                                                                                                              |                                                                                                                                                      |
+|                    |                                                                                                                              | -   `stat` method to compute the remaining axis (default to `stat = "count"` in which case remaining axis is the count for each value of given axis) |
++--------------------+------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+:::
+
+## Some frequently used `geom_*`
+
+**Example:** For the following examples, we will use the following `simulated_covid` dataset
+
+```{r}
+library(dplyr)
+library(lubridate)
+simulated_covid <- readRDS("../data/simulated_covid.rds") |> mutate_if(is.Date, ymd)
+head(simulated_covid)
+```
+
+## Some frequently used `geom_*`
+
+::: r-fit-text
+**Example:** creating a bar chart for number of covid incidence over time 
+
+
+::: {.columns}
+
+::: {.column width="50%"}
+::: {.codewindow .r} 
+code.r
+```{r eval=FALSE}
+ggplot(
+    data = simulated_covid, 
+    aes(x = date_onset)
+  ) +                   
+  geom_bar(
+    color = "cornflowerblue"    
+  )+                       
+  labs(
+    title = "New covid cases over time",
+    x = "Date",
+    y = "Number of cases"
+  )
+```
+:::
+::: 
+
+::: {.column width="50%"}
+
+```{r echo=FALSE}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: "100%"
+ggplot(
+    data = simulated_covid, 
+    aes(x = date_onset)
+  ) +                   
+  geom_bar(
+    color = "cornflowerblue"    
+  )+                       
+  labs(
+    title = "New covid cases over time",
+    x = "Date",
+    y = "Number of cases"
+  )
+```
+
+::: 
+:::
+:::
+
+
+## Some frequently used `geom_*`
+
+::: r-fit-text
+Scatter plot
+
++----------------+----------------------------------------------+---------------------------------+
+| `geom_*`       | description                                  | Parameters                      |
++================+==============================================+=================================+
+| `geom_point()` | Create a scatter plot from given `x` and `y` | Required aesthetic: `x` and `y` |
++----------------+----------------------------------------------+---------------------------------+
+:::
+
+## Some frequently used `geom_*`
+
+::: r-fit-text
+**Example:** creating a scatter plot for number of covid incidence over time
+
+::: columns
+::: {.column width="50%"}
+::: {.codewindow .r}
+code.r
+
+```{r eval=FALSE}
+# we need to compute y (case_count before plotting)
+simulated_covid |> 
+  group_by(date_onset) |> 
+  summarize(
+    case_count = n()
+  ) |> 
+  ggplot(
+      aes(x = date_onset, y = case_count)
+    ) +                   
+    geom_point(
+      color = "cornflowerblue"    
+    )+                       
+    labs(
+      title = "New covid cases over time",
+      x = "Date",
+      y = "Number of cases"
+    )
+```
+:::
+:::
+
+::: {.column width="50%"}
+```{r echo=FALSE}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: "100%"
+simulated_covid |> 
+  group_by(date_onset) |> 
+  summarize(
+    case_count = n()
+  ) |> 
+  ggplot(
+      aes(x = date_onset, y = case_count)
+    ) +                   
+    geom_point(
+      color = "cornflowerblue"    
+    )+                       
+    labs(
+      title = "New covid cases over time",
+      x = "Date",
+      y = "Number of cases"
+    )
+```
+:::
+:::
+:::
+
+## Some frequently used `geom_*`
+
+::: r-fit-text
+Line chart
+
++-----------------+------------------------------------------------+---------------------------------------------------------------------------------------+
+| `geom_*`        | description                                    | Parameters                                                                            |
++=================+================================================+=======================================================================================+
+| `geom_line()`   | Create a line plot from given `x` and `y`      | Required aesthetic: `x` and `y`                                                       |
++-----------------+------------------------------------------------+---------------------------------------------------------------------------------------+
+| `geom_smooth()` | Create a regression line plot from `x` and `y` | Required aesthetic: `x` and `y`                                                       |
+|                 |                                                |                                                                                       |
+|                 |                                                | -   `method`: select regression model (`"auto"`, `"lm"`, `"glm"`, `"gam"`, `"loess"`) |
+|                 |                                                |                                                                                       |
+|                 |                                                | -   `formula`: adjust the formula for the regression model                            |
++-----------------+------------------------------------------------+---------------------------------------------------------------------------------------+
+:::
+
+## Some frequently used `geom_*`
+
+::: r-fit-text
+**Example:** creating a line chart for number of covid incidence over time
+
+::: columns
+::: {.column width="50%"}
+::: {.codewindow .r}
+code.r
+
+```{r eval=FALSE}
+# we need to compute y (case_count before plotting)
+simulated_covid |> 
+  group_by(date_onset) |> 
+  summarize(
+    case_count = n()
+  ) |> 
+  ggplot(
+      aes(x = date_onset, y = case_count)
+    ) +                   
+    geom_line(
+      color = "cornflowerblue"    
+    )+                       
+    labs(
+      title = "New covid cases over time",
+      x = "Date",
+      y = "Number of cases"
+    )
+```
+:::
+:::
+
+::: {.column width="50%"}
+```{r echo=FALSE}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: "100%"
+simulated_covid |> 
+  group_by(date_onset) |> 
+  summarize(
+    case_count = n()
+  ) |> 
+  ggplot(
+      aes(x = date_onset, y = case_count)
+    ) +                   
+    geom_line(
+      color = "cornflowerblue"    
+    )+                       
+    labs(
+      title = "New covid cases over time",
+      x = "Date",
+      y = "Number of cases"
+    )
+```
+:::
+:::
+:::
+
+## Some frequently used `geom_*`
+
+::: r-fit-text
+**Example:** add a regression line for number of covid incidence over time
+
+::: columns
+::: {.column width="50%"}
+::: {.codewindow .r}
+code.r
+
+```{r eval=FALSE}
+simulated_covid |> 
+  group_by(date_onset) |> 
+  summarize(
+    case_count = n()
+  ) |> 
+  ggplot(
+      aes(x = date_onset, y = case_count)
+    ) +                   
+    geom_point(
+      color = "grey"    
+    )+  
+    geom_smooth(
+        color = "cornflowerblue",
+        method = "gam" # choose gam model to fit the data
+      )+
+    labs(
+      title = "New covid cases over time",
+      x = "Date",
+      y = "Number of cases"
+    )
+```
+:::
+:::
+
+::: {.column width="50%"}
+```{r echo=FALSE}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: "100%"
+simulated_covid |> 
+  group_by(date_onset) |> 
+  summarize(
+    case_count = n()
+  ) |> 
+  ggplot(
+      aes(x = date_onset, y = case_count)
+    ) +                   
+    geom_point(
+      color = "grey"    
+    )+  
+    geom_smooth(
+        color = "cornflowerblue",
+        method = "gam" # choose gam model to fit the data
+      )+
+    labs(
+      title = "New covid cases over time",
+      x = "Date",
+      y = "Number of cases"
+    )
+```
+:::
+:::
+:::
+
+## Some frequently used `geom_*`
+
+::: r-fit-text
+Box plot
+
++------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+| `geom_*`         | description                                                                                                              | Parameters                                       |
++==================+==========================================================================================================================+==================================================+
+| `geom_boxplot()` | Create a boxplot from a continuous variable.                                                                             | Required aesthetic: `x` [**or**]{.underline} `y` |
+|                  |                                                                                                                          |                                                  |
+|                  | If both `x` and `y` are given, one must be a categorical variable (in which case a boxplot is created for each category) |                                                  |
++------------------+--------------------------------------------------------------------------------------------------------------------------+--------------------------------------------------+
+:::
+
+## Some frequently used `geom_*`
+
+::: r-fit-text
+**Example:** create a box plot to compare number of cases per day between 2 outbreaks
+
+::: columns
+::: {.column width="50%"}
+::: {.codewindow .r}
+code.r
+
+```{r eval=FALSE}
+simulated_covid |> 
+  group_by(date_onset, outbreak) |> 
+  summarize(
+    case_count = n()
+  ) |> 
+  ggplot(
+      aes(x = case_count, y = outbreak)
+    ) +                   
+    geom_boxplot()+
+    labs(
+      title = "Compare distribution of daily cases between 2 outbreaks",
+      y = "Outbreak",
+      x = "Number of daily cases"
+    )
+```
+:::
+:::
+
+::: {.column width="50%"}
+```{r echo=FALSE}
+#| fig-width: 5
+#| fig-height: 5
+#| out-width: "100%"
+simulated_covid |> 
+  group_by(date_onset, outbreak) |> 
+  summarize(
+    case_count = n()
+  ) |> 
+  ggplot(
+      aes(x = case_count, y = outbreak)
+    ) +                   
+    geom_boxplot()+
+    labs(
+      title = "Compare distribution of daily cases between 2 outbreaks",
+      y = "Outbreak",
+      x = "Number of daily cases"
+    )
+```
+:::
+:::
+:::
+
+## Save plot
+
+::: r-fit-text
+Function `ggsave()` is used for saving plots with the following key parameters
+
+-   `plot` select plot to save (default to the last generated plot)
+
+-   `filename` name of the saved file
+
+-   `path` path to the directory where the plot is stored
+
+-   `width`, `height` plot size in units expressed by the `units` argument
+
+-   `dpi` plot resolution
+:::
+
+## Save plot
+
+**Example**: save the last generated plot
+
+```{r eval=FALSE}
+ggsave(
+  path = "plots", # save plot under plots directory
+  filename = "new_plot.png",
+  width = 800, height = 600, # adjust plot size in pixel
+  units = "px",
+  dpi = 200 # set resolution
+  )
+```
+
