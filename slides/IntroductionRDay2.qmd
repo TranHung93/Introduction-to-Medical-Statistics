@@ -1,0 +1,145 @@
+---
+title: Introduction to R 2025, Day 2
+author: "Ronald Geskus and Thinh Ong Phuc"
+engine: knitr
+format-links: 
+  - html
+toc: false
+number-sections: false
+webr:
+  channel-type: "shared-array-buffer"
+  cell-options:
+    autorun: false
+    message: true
+    warning: true
+    eval: true
+    echo: false
+format:
+  revealjs:
+    slide-number: true
+    logo: "Figures/OUCRU.jpg"
+    preview-links: true
+    theme: solarized
+    transition: fade
+    show-slide-number: print
+    embed-resources: true
+    include-in-header: 
+      - text: |
+          <script src='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.js'></script>
+filters: 
+  - webr
+  - assign
+profile: 
+  default: assign
+---
+
+## Learning goals {.smaller} 
+
+- Day 1
+  - Basic structure of the R program and language
+  - Use the RStudio working environment	
+  - Import, inspect and manage a data set
+    - Select variables (columns) and rows (observations)
+	- Missing data, factors, dates
+
+::: {.fragment .highlight-red}
+- Day 2
+  - Functions
+  - Visualisations using graphics in base R
+  - Object specific functions
+  - Finding further information
+::: 
+
+
+# Functions
+
+## Basic format {.smaller .scrollable}
+
+- All actions are performed via functions: 
+  `sqrt`, `mean`, `help`, `library`, `t.test`, `plot`
+
+- Input: *required* and *optional* arguments; within parentheses, separated by comma
+  - required: need to be supplied
+  - optional: have default values
+
+    Beware of sequence of arguments; required ones come first
+
+	```{webr-r}
+	log(1000)           # natural log, does not give 3
+    help(log)
+    log(1000, 10) 
+    log(10, 1000)       # gives 1000-log of 10
+    log(base=10, x=1000) # x required, base optional
+    log(b=10,x=1000)     # Argument names can be abbreviated if no risk of ambiguity
+	```
+- Special "argument": ...
+  
+  anything that makes sense, e.g. in `c` and `paste` function
+
+- Output: result of calculations (typically assigned to R object), graphics, help
+   window, etc.
+
+- You can use functions within other functions, e.g. `mean(c(3,6,8))`
+
+## Functions: the inside {.smaller}
+
+- Function code can be seen by leaving out the parentheses \texttt{( )}
+```{webr-r}
+IQR
+```
+- General structure: 
+
+```{.r}
+FunctionName(args) {
+    lines of R code (collection of functions)
+}
+```
+
+The last value is returned as output
+- You can write your own functions:
+
+```{webr-r}
+good.morning <- function(work){
+    if(work==TRUE) cat("wake up") else 
+      cat("you can stay in bed")
+}
+good.morning()
+```
+
+# Basic data visualisations
+
+## R graphics systems:
+
+- Base graphics (package *grDevices*)
+  - Simple to use
+  - Always loaded when R is started
+  - See Ch.\ 12 of manual [An Introduction to R](https://cran.r-project.org/doc/manuals/R-intro.pdf)
+- lattice} package. Less popular nowadays. Not covered here. 
+- ggplot2 package (Wednesday morning)
+- Note: these systems cannot be mixed
+- Each of these systems has many extension packages
+
+
+
+
+## Lists {.smaller}
+
+- Modes cannot be mixed in vectors
+```{webr-r}
+teacher <- c("Ronald","Thinh","Tuyen")
+room <- c(306,305,305)
+c(teacher, room)
+```
+- Modes can be mixed in a list:
+
+```{webr-r}
+list(teacher, room)
+list(teacher = teacher, room = room)
+```
+Two *components*, with names `teacher` and `room` 
+
+- Data are of mode list, but with a special class `data.frame`
+```{webr-r}
+mode(titanic)
+class(titanic)
+```

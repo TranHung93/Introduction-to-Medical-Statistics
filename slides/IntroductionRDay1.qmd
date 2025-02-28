@@ -42,18 +42,17 @@ Not a course on using R for statistics or bioinformatics
 ::: {.fragment}
 - Day 1
   - Basic structure of the R program and language
-  - Import, manage and summarize a data set
-    - Select variables (columns) and rows (observations)
+    - Basic computations and selections
+	- Objects and functions
   - Use the RStudio working environment	
-  - Modes, missing data, factors, dates
+  - Import, inspect and manage a data set
+    - Select variables (columns) and rows (observations)
+	- Missing data, factors, dates
 :::
 
 ::: {.fragment}
 - Day 2
-  - Functions
-  - Visualisations using graphics in base R
-  - Object specific functions
-  - Finding further information
+  - Functions, R graphics, finding further information
 ::: 
 
 
@@ -623,6 +622,10 @@ computed, as a numeric or complex vector of length one.
   - **Details**, **References**, **See Also**
   - **Examples**. You can use the `example` function to run the  examples: `example(mean)`
 
+
+# Data: import, inspection and management
+
+
 ## Data import {.smaller}
 
 1. R: see [R Data Import/Export](https://cran.r-project.org/manuals.html)
@@ -752,7 +755,7 @@ xtabs(~titanic$survived, data=titanic, subset=(titanic$sex=="male"))
   ```
 
 
-## Extra structure to categorical variables: factors {.smaller}
+## Give extra structure to categorical variables: factors {.smaller}
 
 - Define the ordering of the "levels" (useful in regression models)
   - Default is by alphabetical/numeric order
@@ -788,29 +791,5 @@ xtabs(~titanic$survived, data=titanic, subset=(titanic$sex=="male"))
   `format`: change display format
    
 - See page 5 of this [reference card](http://cran.r-project.org/doc/contrib/Baggott-refcard-v2.pdf)
-
-
-
-## Lists {.smaller}
-
-- Modes cannot be mixed in vectors
-```{webr-r}
-teacher <- c("Ronald","Thinh","Tuyen")
-room <- c(306,305,305)
-c(teacher, room)
-```
-- Modes can be mixed in a list:
-
-```{webr-r}
-list(teacher, room)
-list(teacher = teacher, room = room)
-```
-Two *components*, with names `teacher` and `room` 
-
-- Data are of mode list, but with a special class `data.frame`
-```{webr-r}
-mode(titanic)
-class(titanic)
-```
 
 
