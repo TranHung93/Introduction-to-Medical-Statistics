@@ -94,6 +94,10 @@ Not a course on using R for statistics or bioinformatics
 
 # Basics of the R Language
 
+## R functions
+
+
+
 ## R as a pocket calculator I {.scrollable}
 
 Many mathematical operations (`+`,  `-`,  `*`,  `/`,  `^`/`**`) pre-defined
@@ -317,7 +321,27 @@ sd(fare)
 ```
 :::
 
+## Functions
 
+::: {.fragment fragment-index=1}
+
+- A function is how we tell the computer to do work for us
+
+- Think of it like asking someone to complete a task for you
+
+:::
+
+::: {.fragment fragment-index=2}
+**Example**
+
+Thinh told Ronald: ***"Please give feedback on my measles model manuscript before next Friday"***. How does this translate into R?
+:::
+
+::: {.fragment fragment-index=3}
+```
+give_feedback(type = "manuscript", which = "measles model", deadline = "next Friday")
+```
+:::
 
 ## Functions {.smaller}
 
