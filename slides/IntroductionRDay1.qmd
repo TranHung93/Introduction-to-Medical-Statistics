@@ -94,10 +94,6 @@ Not a course on using R for statistics or bioinformatics
 
 # Basics of the R Language
 
-## R functions
-
-
-
 ## R as a pocket calculator I {.scrollable}
 
 Many mathematical operations (`+`,  `-`,  `*`,  `/`,  `^`/`**`) pre-defined
