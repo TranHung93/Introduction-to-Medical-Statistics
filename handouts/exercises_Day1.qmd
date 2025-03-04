@@ -10,8 +10,6 @@ format:
   pdf:
     fontsize: 12pt
 toc: TRUE
-lof: FALSE
-lot: FALSE
 number-sections: FALSE
 thanks: "Please do not circulate."
 editor: visual
