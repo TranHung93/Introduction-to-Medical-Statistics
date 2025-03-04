@@ -26,7 +26,7 @@ execute:
 
 ## 1. External Data
 
-We will work with a dataset that gives the survival status of passengers on the Titanic. See [this link](https://hbiostat.org/data/repo/ctitanic3) for a description of the variables. Some background information on the data can be found [here](https://hbiostat.org/data/repo/titanic). We provide the dataset in **Excel** format ([Titanic3.xlsx](https://github.com/OUCRU-Modelling/R-training-2025/blob/main/slides/data/Titanic3.xlsx)).
+We will work with a dataset that gives the survival status of passengers on the Titanic. See [this link](https://hbiostat.org/data/repo/ctitanic3) for a description of the variables. Some background information on the data can be found [here](https://hbiostat.org/data/repo/titanic). We provide the dataset in **Excel** format ([Titanic3.xlsx](../slides/data/Titanic3.xlsx)).
 
 Until now, you have only used the base R program. We now switch to RStudio, which provides a much nicer and richer interface when working with R. Start the RStudio program.
 
@@ -75,7 +75,7 @@ You now can start to write your codes in the script.
 
 ```{r, echo=TRUE}
 library(readxl)
-titanic <- read_excel("Titanic3.xlsx", na = "NA")
+titanic <- read_excel("../slides/data/Titanic3.xlsx", na = "NA")
 View(titanic)
 ```
 

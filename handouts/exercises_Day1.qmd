@@ -128,8 +128,7 @@ as `titanic` object again, but specify `NA` as the missing value indicator under
 ```{r}
 #| echo: true
 library(readxl)
-titanic <- read_excel("W:/Teaching/RCourse2023/Exercises/Titanic3.xlsx",
-                      na = "NA")
+titanic <- read_excel("data/Titanic3.xlsx", na = "NA")
 View(titanic)
 ```
 
