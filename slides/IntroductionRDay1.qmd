@@ -562,7 +562,7 @@ Consists of 4 main panes
     -   Help: show documentations for functions or packages
 :::
 
-
+	
 ## Packages {.smaller}
 
 - Regular R users transform recurring tasks into self-made functions
@@ -580,7 +580,6 @@ Consists of 4 main panes
 
 -   Give package developers appropriate credit and [cite their packages](https://ropensci.org/blog/2021/11/16/how-to-cite-r-and-r-packages/){preview-link="true"}
 	
-	
 ## Packages, where to find them?
 
 
@@ -593,8 +592,31 @@ Consists of 4 main panes
     *base*, *graphics*, *stats*, *utils* ...
 
   E.g. *base* package contains `sqrt` function
-- Other packages need to be loaded before use, best way is via `library` function
+- Other packages need to be loaded before use, best way is via `library` f
+  
 
+# Data: import, inspection and management
+
+
+## Data import {.smaller}
+
+1. R: see [R Data Import/Export](https://cran.r-project.org/manuals.html){preview-link="true"}
+
+2. RStudio: **Environment** pane: **Import Dataset**; or via **File** menu: **Import Dataset** 
+  - text and csv (`base` or `readr` package)
+  - Excel (`readxl` package)
+    ```{.r}
+   library(readxl)
+   titanic <- read_excel("data/Titanic3.xlsx")
+   ```
+  - SPSS/Stata/SAS (`haven` package)
+
+
+  - see [Importing Data with RStudio](https://support.posit.co/hc/en-us/articles/218611977-Importing-Data-with-RStudio){target="_blank"}
+  - Imported as a ["tibble"](https://github.com/tidyverse/tibble){target="_blank"}
+    (enhancement of `data.frame`)
+
+-   Database: [MS Access, SQLite, ...](https://solutions.posit.co/connections/db/databases/){preview-link="true"}
 
 
 ## Help {.smaller .scrollable}
@@ -622,7 +644,7 @@ na.rm: a logical evaluating to 'TRUE' or 'FALSE' indicating whether `NA` values 
 
 **Value:** If trim is zero (the default), the arithmetic mean of the values in x is
 computed, as a numeric or complex vector of length one.
-
+	
 
 ## Help
 
@@ -632,32 +654,9 @@ computed, as a numeric or complex vector of length one.
   - **Arguments**: description of the individual arguments
   - **Value**: what is the result of a function call
   - often: **Details**, **References**, **See Also**
-  - **Examples**. You can use the `example` function to run the  examples: `example(mean)`
+	- **Examples**. You can use the `example` function to run the  examples: `example(mean)`
 
 
-# Data: import, inspection and management
-
-
-## Data import {.smaller}
-
-1. R: see [R Data Import/Export](https://cran.r-project.org/manuals.html){preview-link="true"}
-
-2. RStudio: **Environment** pane: **Import Dataset**; or via **File** menu: **Import Dataset** 
-  - text and csv (`base` or `readr` package)
-  - Excel (`readxl` package)
-    ```{.r}
-   library(readxl)
-   titanic <- read_excel("data/Titanic3.xlsx")
-   ```
-  - SPSS/Stata/SAS (`haven` package)
-
-
-  - see [Importing Data with RStudio](https://support.posit.co/hc/en-us/articles/218611977-Importing-Data-with-RStudio){target="_blank"}
-  - Imported as a ["tibble"](https://github.com/tidyverse/tibble){target="_blank"}
-    (enhancement of `data.frame`)
-
--   Database: [MS Access, SQLite, ...](https://solutions.posit.co/connections/db/databases/){preview-link="true"}
-	
 ## Missing data {.smaller .scrollable}
 
 - Special value: `NA` (short for "not available")
@@ -786,7 +785,7 @@ xtabs(~titanic$survived, data=titanic, subset=(titanic$sex=="male"))
   ```{.r}
   head(subset(titanic, select= -(sex:fare)))
   ```
-  - `with` function to save repetitive use of data set name : 
+- `with` function to save repetitive use of data set name : 
 
   ```{.r}
   with(titanic, table(sex, survived))
