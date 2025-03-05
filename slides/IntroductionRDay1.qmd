@@ -725,21 +725,23 @@ table(titanic$sex, titanic$survived, useNA="always") # has no added value
 addmargins(table(titanic$sex, titanic$survived))
 ```
 
-## Selection by name
+## Selection by name {.scrollable}
 
+Create a named vector:
 ```{webr-r}
 teacher <- c("Ronald","Thinh","Tuyen")
 room <- c(306,305,305)
 names(room) <- teacher
 room
-names(room)
 ```
 
+Select by name:
 ```{webr-r}
+names(room)
 room["Ronald"]
 ```
 
-- Same for data sets
+- Same for data sets (dimnames because there are two dimensions):
  ```{webr-r}
  dimnames(titanic)
  titanic[c(2,3),c("name","age")]
@@ -747,13 +749,16 @@ room["Ronald"]
 
 ## More efficient row selections: "subset" 
 
-- `subset` function: `subset(my.data, subset=...)`,  with ... a logical condition:
+- `subset` function: `subset(my.data, subset=...)`, 
+
+  with `...` a logical condition:
 
 ```{.r}
 subset(titanic, pclass %in% c("1st","2nd"))$survived
+## %in% is another logical construct
 ```
 
-    `%in%` is another logical construct
+
 - `subset` argument in functions with *formula* structure:
 
 ```{.r}
@@ -769,24 +774,23 @@ xtabs(~titanic$survived, data=titanic, subset=(titanic$sex=="male"))
 
 ## More efficient column selections
 
-- `subset` function: `subset(my.data, select=...)`, with ... :
-
+- `subset` function: `subset(my.data, select=...)`, with `...` a selection of columns names:
   ```{.r}
   head(subset(titanic, select= c(sex,fare)))
   ```
-  
+  We can select a sequence of names via `:` function:
   ```{.r}
   head(subset(titanic, select= sex:fare))
   ```
-
+  Or use `-` to exclude columns:
   ```{.r}
   head(subset(titanic, select= -(sex:fare)))
   ```
-- `with` function: 
+  - `with` function to save repetitive use of data set name : 
 
   ```{.r}
   with(titanic, table(sex, survived))
-  ## same as table(titanic$sex, titanic$survived)
+  ## instead of table(titanic$sex, titanic$survived)
   ```
 
 
