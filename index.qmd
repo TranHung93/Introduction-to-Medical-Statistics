@@ -52,6 +52,7 @@ Please follow [this handout](handouts/precourse_setup.qmd){target="_blank"} befo
   - Perform basic data exploration, including calculating summaries and identifying missing values
   - Navigate RStudio with confidence
 - [Exercises](handouts/exercises_Day1.qmd){target="_blank"}
+- [Exercise answer keys]{style="cursor:not-allowed;user-select:none;"}
 
 ### Day 2
 
@@ -62,6 +63,7 @@ Please follow [this handout](handouts/precourse_setup.qmd){target="_blank"} befo
   - Understand the R working environment, including file paths and workspace management
   - Find and use R documentation and resources to solve problems on your own
 - [Exercises]{style="cursor:not-allowed;user-select:none;"}
+- [Exercise answer keys]{style="cursor:not-allowed;user-select:none;"}
 
 ## Principles of data visualisation
 
@@ -73,6 +75,7 @@ Please follow [this handout](handouts/precourse_setup.qmd){target="_blank"} befo
   - The grammar of graphics—understanding how plots are built
   - How to design clear and impactful visualisations
 - [Exercises]{style="cursor:not-allowed;user-select:none;"}
+- [Exercise answer keys]{style="cursor:not-allowed;user-select:none;"}
 
 ## Advanced R topics
 
@@ -87,6 +90,7 @@ Please follow [this handout](handouts/precourse_setup.qmd){target="_blank"} befo
   - Pivotting dataframes into long and wide formats
   - Vectorisation in R with `map()`
 - [Exercises]{style="cursor:not-allowed;user-select:none;"}
+- [Exercise answer keys]{style="cursor:not-allowed;user-select:none;"}
 
 ## Using Quarto for reproducible research
 
@@ -98,6 +102,7 @@ Please follow [this handout](handouts/precourse_setup.qmd){target="_blank"} befo
   - Generate reports in multiple formats: Word, PDF, slides, web pages…
   - Easily update analyses when new data becomes available
 - [Exercises]{style="cursor:not-allowed;user-select:none;"}
+- [Exercise answer keys]{style="cursor:not-allowed;user-select:none;"}
 
 # Appendix
 
