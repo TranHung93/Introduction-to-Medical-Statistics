@@ -899,3 +899,415 @@ ggsave(
 ```
 
 
+# Advance `ggplot2`
+
+Tuyen Huynh
+
+## Overview
+
+- What does `mapping = aes()` do?
+- Inheritance of data and aesthetics
+- The `annotate()` layer
+- Extending `ggplot2`
+- Interactive 3d plots with `plotly`
+
+
+## What does `mapping = aes()` do?
+
+::: {.fragment}
+
+- `ggplot()` arguments and default values:
+
+```{.r}
+ggplot(data = NULL, mapping = aes(), ...)
+```
+
+- `geom_*()` arguments and default values:
+
+```{.r}
+geom_bar(mapping = NULL, data = NULL, ...)
+geom_boxplot(mapping = NULL, data = NULL, ...)
+geom_point(mapping = NULL, data = NULL, ...)
+```
+
+:::
+
+::: {.fragment}
+![](figures/ggplots_mapping_aes.png)
+:::
+
+## What does `mapping = aes()` do?
+
+Recall this slide: 
+
++------------+------------+--------------+--------------+--------------------+
+| label      | x          | y            | size         | color              |
+|            |            |              |              |                    |
+| (country)  | (coverage) | (inequality) | (population) | (region)           |
++============+============+==============+==============+====================+
+| Nigeria    | 0.20       | -0.07        | 220M         | Sub-Saharan Africa |
++------------+------------+--------------+--------------+--------------------+
+
+::: {.fragment}
+```{r}
+df <- readRDS("data/nature_plot.rds")
+head(df)
+```
+:::
+
+
+## What does `mapping = aes()` do?
+
+**Idea**: we are **mapping** the *variables* in the data to the *aesthetics* of a *geometry*
+
+```{.r}
+aes(x = coverage, y = inequality)
+#> Aesthetic mapping: 
+#> * `x` -> `coverage`
+#> * `y` -> `inequality`
+```
+
+<br/>
+
+::: {.fragment}
+```{.r}
+aes(x = coverage^2, y = inequality/2)
+#> Aesthetic mapping: 
+#> * `x` -> `coverage^2`
+#> * `y` -> `inequality/2`
+```
+:::
+
+## What does `mapping = aes()` do?
+
+How do we know which aesthetics does each geometry support? Read the [documentation](https://ggplot2.tidyverse.org/reference/index.html#geoms){target="_blank" style="text-decoration: underline;"}!
+
+Simply:
+
+- Read the documentation of the geometry of interest
+- Click **Aesthetics** on the navigation bar on the right (or scroll down)
+- All aesthetics compatible for the geometry are listed
+
+
+## Inheritance of data and aesthetics
+
+::: {.fragment}
+The idea is that:
+
+- `ggplot()` can control the **dataset** and **aesthetics**
+- `geom_*()`s can also control the type of **geometries**, and *allow customisation* of **aesthetics**
+:::
+
+## Inheritance of data and aesthetics
+
+Recall this:
+
+- `ggplot()` arguments and default values:
+
+```{.r}
+ggplot(data = NULL, mapping = aes(), ...)
+```
+
+- `geom_*()` arguments and default values:
+
+```{.r}
+geom_bar(mapping = NULL, data = NULL, ...)
+geom_boxplot(mapping = NULL, data = NULL, ...)
+geom_point(mapping = NULL, data = NULL, ...)
+```
+
+## Inheritance of data and aesthetics
+
+A typical `ggplot` plot will look something like:
+
+```{.r}
+ggplot(plot_df, aes(x = date, y = count)) +
+  geom_line() +
+  geom_point()
+```
+
+::: {.fragment}
+Implicitly, you can think of this as:
+
+```{.r}
+ggplot() +
+  geom_line(mapping = aes(x = date, y = count), data = plot_df) +
+  geom_line(mapping = aes(x = date, y = count), data = plot_df)
+```
+:::
+
+::: {.fragment .callout-note}
+- We call this **inheritance**
+- Data and aesthetics are inherited **top-down**
+:::
+
+## Inheritance of data and aesthetics {auto-animate="true"}
+
+You have seen this in action before!
+
+```{.r}
+cols <- c(
+  "red" = "#fa8495",
+  "green" = "#4ca258",
+  "darkblue" = "#6493bb",
+  "yellow" = "#d7c968",
+  "blue" = "#7dd8f3",
+  "purple" = "#bc5c91"
+)
+
+ggplot(df, aes(x = coverage, y = inequality)) +
+  geom_point(aes(size = size, color = color), alpha = 0.8) +
+  geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) +
+  geom_vline(xintercept = 0, color = "#999999") +
+  geom_hline(yintercept = 0, color = "#999999") +
+  scale_x_continuous(breaks = c(-0.25, 0, 0.25, 0.5),
+                     limits = c(-0.4, 0.55)) +
+  scale_y_continuous(breaks = c(-0.1, 0, 0.1), limits = c(-0.16, 0.1)) +
+  scale_size_continuous(
+    breaks = c(2, 4, 6, 8),
+    labels = c("50 million", "100 million", "150 million", "200 million"),
+    range = c(0, 8),
+    guide = guide_legend(order = 1)
+  ) +
+  scale_color_manual(
+    values = cols,
+    breaks = c("red", "green", "darkblue", "yellow", "blue", "purple"),
+    labels = c(
+      "Central Europe, Eastern Europe and Central Asia",
+      "Latin America and Caribbean",
+      "North Africa and Middle East",
+      "South Asia",
+      "Southeast Asia, East Asia and Oceania",
+      "Sub-Saharan Africa"
+    ),
+    guide = guide_legend(order = 2)
+  ) +
+  labs(x = "Change in MCV1 coverage (2019-2000)",
+       y = "Change in absolute geographical inequality (2019-2000)",
+       size = NULL,
+       color = NULL) +
+  theme_classic() +
+  theme(
+    legend.position = "top",
+    legend.direction = "vertical",
+    legend.text = element_text(size = 11),
+    legend.key.height = unit(0.5, "cm"),
+    axis.text = element_text(size = 11)
+  )
+```
+
+## Inheritance of data and aesthetics {auto-animate="true"}
+
+```{.r}
+ggplot(df, aes(x = coverage, y = inequality)) +
+  geom_point(aes(size = size, color = color), alpha = 0.8) +
+  geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) 
+```
+
+```{r}
+#| eval: true
+#| echo: false
+cols <- c(
+  "red" = "#fa8495",
+  "green" = "#4ca258",
+  "darkblue" = "#6493bb",
+  "yellow" = "#d7c968",
+  "blue" = "#7dd8f3",
+  "purple" = "#bc5c91"
+)
+
+ggplot(df, aes(x = coverage, y = inequality)) +
+  geom_point(aes(size = size, color = color), alpha = 0.8) +
+  geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) +
+  geom_vline(xintercept = 0, color = "#999999") +
+  geom_hline(yintercept = 0, color = "#999999") +
+  scale_x_continuous(breaks = c(-0.25, 0, 0.25, 0.5),
+                     limits = c(-0.4, 0.55)) +
+  scale_y_continuous(breaks = c(-0.1, 0, 0.1), limits = c(-0.16, 0.1)) +
+  scale_size_continuous(
+    breaks = c(2, 4, 6, 8),
+    labels = c("50 million", "100 million", "150 million", "200 million"),
+    range = c(0, 8),
+    guide = guide_legend(order = 1)
+  ) +
+  scale_color_manual(
+    values = cols,
+    breaks = c("red", "green", "darkblue", "yellow", "blue", "purple"),
+    labels = c(
+      "Central Europe, Eastern Europe and Central Asia",
+      "Latin America and Caribbean",
+      "North Africa and Middle East",
+      "South Asia",
+      "Southeast Asia, East Asia and Oceania",
+      "Sub-Saharan Africa"
+    ),
+    guide = guide_legend(order = 2)
+  ) +
+  labs(x = "Change in MCV1 coverage (2019-2000)",
+       y = "Change in absolute geographical inequality (2019-2000)",
+       size = NULL,
+       color = NULL) +
+  theme_classic() +
+  theme(
+    legend.position = "top",
+    legend.direction = "vertical",
+    legend.text = element_text(size = 11),
+    legend.key.height = unit(0.5, "cm"),
+    axis.text = element_text(size = 11)
+  )
+```
+
+## Inside and outside `aes()`
+
+What happens if we do it like this:
+
+```{.r}
+ggplot(df, aes(x = coverage, y = inequality)) +
+  geom_point(aes(size = size, color = color, alpha = 0.8)) +
+  geom_text(aes(label = country, hjust = -0.2, vjust = 0.2)) 
+```
+
+```{r}
+#| echo: false
+cols <- c(
+  "red" = "#fa8495",
+  "green" = "#4ca258",
+  "darkblue" = "#6493bb",
+  "yellow" = "#d7c968",
+  "blue" = "#7dd8f3",
+  "purple" = "#bc5c91"
+)
+
+ggplot(df, aes(x = coverage, y = inequality)) +
+  geom_point(aes(size = size, color = color, alpha = 0.8)) +
+  geom_text(aes(label = country, hjust = -0.2, vjust = 0.2)) +
+  geom_vline(xintercept = 0, color = "#999999") +
+  geom_hline(yintercept = 0, color = "#999999") +
+  scale_x_continuous(breaks = c(-0.25, 0, 0.25, 0.5),
+                     limits = c(-0.4, 0.55)) +
+  scale_y_continuous(breaks = c(-0.1, 0, 0.1), limits = c(-0.16, 0.1)) +
+  scale_size_continuous(
+    breaks = c(2, 4, 6, 8),
+    labels = c("50 million", "100 million", "150 million", "200 million"),
+    range = c(0, 8),
+    guide = guide_legend(order = 1)
+  ) +
+  scale_color_manual(
+    values = cols,
+    breaks = c("red", "green", "darkblue", "yellow", "blue", "purple"),
+    labels = c(
+      "Central Europe, Eastern Europe and Central Asia",
+      "Latin America and Caribbean",
+      "North Africa and Middle East",
+      "South Asia",
+      "Southeast Asia, East Asia and Oceania",
+      "Sub-Saharan Africa"
+    ),
+    guide = guide_legend(order = 2)
+  ) +
+  labs(x = "Change in MCV1 coverage (2019-2000)",
+       y = "Change in absolute geographical inequality (2019-2000)",
+       size = NULL,
+       color = NULL) +
+  theme_classic() +
+  theme(
+    legend.position = "top",
+    legend.direction = "vertical",
+    legend.text = element_text(size = 11),
+    legend.key.height = unit(0.5, "cm"),
+    axis.text = element_text(size = 11)
+  )
+```
+
+## Inside and outside `aes()`
+
+Back to this slide (again):
+
++------------+------------+--------------+--------------+--------------------+
+| label      | x          | y            | size         | color              |
+|            |            |              |              |                    |
+| (country)  | (coverage) | (inequality) | (population) | (region)           |
++============+============+==============+==============+====================+
+| Nigeria    | 0.20       | -0.07        | 220M         | Sub-Saharan Africa |
++------------+------------+--------------+--------------+--------------------+
+
+```{r}
+df <- readRDS("data/nature_plot.rds")
+head(df)
+```
+
+## Inside and outside `aes()`
+
+::: {.callout-important}
+In short:
+
+  - You want the aesthetics to change with the data -> put it **inside** `aes()`
+  - You want the aesthetics to be fixed regardless of data -> put it **outside** `aes()`
+  - The aesthetics must be supported by the geometry
+:::
+
+## The `annotate()` layer {.scrollable}
+
+What if we want to *annotate* specific parts of a figure?
+
+::: {.fragment}
+```{r}
+#| out-width: "100%"
+ggplot(aggregated_cases, aes(x = date_onset, y = case_count)) +                   
+  geom_point(color = "grey") +
+  geom_smooth(color = "cornflowerblue", method = "gam") +
+  labs(
+    title = "New covid cases over time",
+    x = "Date",
+    y = "Number of cases"
+  )
+```
+:::
+
+## The `annotate()` layer {.scrollable}
+
+Option 1: Simply just use `geom_*()`s, and that's absolutely a valid way
+
+
+::: {.fragment}
+```{r}
+#| out-width: "100%"
+ggplot(aggregated_cases, aes(x = date_onset, y = case_count)) +                   
+  geom_point(color = "grey") +
+  geom_smooth(color = "cornflowerblue", method = "gam") +
+  # figure annotation geoms
+  geom_vline(xintercept = as.Date("2023-03-01"), linetype = 2) +
+  geom_label(label = "Start of outbreak", x = as.Date("2023-03-01"), y = 30) +
+  # labels
+  labs(
+    title = "New covid cases over time",
+    x = "Date",
+    y = "Number of cases"
+  )
+```
+:::
+
+
+## The `annotate()` layer {.scrollable}
+
+Option 2: Use the `annotate()` layer, which was specially made for this (very little effort to switch from `geom_*()`s)
+
+
+::: {.fragment}
+```{r}
+#| out-width: "100%"
+ggplot(aggregated_cases, aes(x = date_onset, y = case_count)) +                   
+  geom_point(color = "grey") +
+  geom_smooth(color = "cornflowerblue", method = "gam") +
+  # figure annotation geoms
+  geom_vline(xintercept = as.Date("2023-03-01"), linetype = 2) +
+  annotate("label", label = "Start of outbreak", x = as.Date("2023-03-01"), y = 30) +
+  # labels
+  labs(
+    title = "New covid cases over time",
+    x = "Date",
+    y = "Number of cases"
+  )
+```
+:::
+
