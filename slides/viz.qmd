@@ -155,8 +155,6 @@ The author
 
 ## What is a grammar {.smaller}
 
-- Purpose: express ideas or information in a coherent way
-
 - Natural language grammar:
 	- Defines components of a sentence (verb, noun, ...) and rules how to combine
       them
@@ -165,10 +163,13 @@ meaningful; one can write grammatically correct nonsense
 
 - Graphics grammar: 
   - Defines components of a statistical graph and rules how to combine them
-  - Does not advise on the best choice of scale (linear, logarithmic), color or line type
+  - Does not advise on the best choice of scale (linear, logarithmic), color or line
+    type; one can create noninformative graphs
+
+- Grammar helps expressing ideas or information in a clear and coherent way
 
 
-## Main components of a statistical graph (R terminology)
+## Main components of a graph (R) {.smaller}
 
 - Mapping from data to <span style="color:red;">aesthetic attributes</span> of <span
   style="color:red;">geometric objects</span>
@@ -468,17 +469,64 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 
 ::::
 
-## Main components of a statistical graph (R terminology)
+## Main components of a graph (R) {.smaller}
 
 - Mapping from data to aesthetic attributes of geometric objects
 
 - Geometic objects: what you see on the plot (points, lines, bars)
 
-- <span style="color:red;">Aesthetic attributes</span>: "role" of variables in plot:
+- Aesthetic attributes: "role" of variables in plot:
 location (often along x-axis and y-axis), colour, size, shape
 
 - <span style="color:red;">Scales</span>: map data values to aesthetic attributes
 
+## Scales
+
+-  Position on x-axis and on y-axis
+    
+	May be (summarized) value after statistical transformation
+
+
+
+
+## Statistical transformation 
+
+Creation of a geometric object may be preceded by a statistical transformation
+
+-   Value transformation (logarithm)
+
+-   Histogram: statistical transformation "sum" or
+    "percentage/frequency" before geometric object "bar" is used
+
+-   Linear regression line: statistical transformation: "least squares
+    fit" before geometric object "line" is used
+
+-   Boxplot
+
+## Scales 
+
+-  Position on x-axis and on y-axis
+    
+	May be (summarized) value after statistical transformation
+
+-   :::: columns
+    ::: {.column width="50%"}
+	Rest: via colour, 
+	
+	shape (type of point), 
+	
+	linetype,
+	
+    point size	
+    :::
+	
+	::: {.column width="50%"}
+    ![ ](figures/viz/ColorGraph.png){width=50%}
+    :::
+	
+	::::
+
+-   Reading values from the graph via **guides**: tick marks and labels, legend
 
 
 ## Refine the plot {.smaller}
@@ -1071,7 +1119,7 @@ ggsave(
 )
 ```
 
-## Main components of a statistical graph (R terminology)
+## Main components of a graph (R) {.smaller}
 
 - Mapping from data to aesthetic attributes of geometric objects
 
@@ -1082,16 +1130,23 @@ location (often along x-axis and y-axis), colour, size, shape
 
 - Scales: map data values to aesthetic attibutes
 
-Cartesian, polar, map projections. (Networks, trees have no coordinate
-system)
+- Coordinate system: cartesian, polar, map projections.
 
-separate panels (subfigures)
+  Networks, trees have no coordinate system
 
-Not about [graph type](https://www.data-to-viz.com/); ($\approx$
-language, words).\
-Not about font size, background colour ... Some of these are specified
+- Not about:
+  -  [graph type](https://www.data-to-viz.com/); ($\approx$
+language, words)
+  -  font size, background colour ... Some of these are specified
 in a <span style="color:red;">theme</span>
 
+## Polar coordinate system
+
+Pie chart WHO European Health Report 2009
+
+![ ](figures/viz/DeathsWHO.jpg){width="90%"}
+
+**Geometric object? Aesthetic attributes? Transformation? Coordinate system?**
 
 # Advance `ggplot2`
 
