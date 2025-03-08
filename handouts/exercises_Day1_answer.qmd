@@ -127,12 +127,18 @@ b.  Use the function `dim` to find the number of rows (passengers) and columns (
 dim(titanic)
 ```
 
+**Answer**: 1309  rows and 17 colums
+
 c.  Use the `str` function to obtain a summary of the basic characteristics per variable. Have a look at the columns for `survived` and `age`. Do they have the mode that you expect? (You can also use the `mode` function to check their modes.)
 
 ```{r}
 str(titanic)
 mode(titanic)
 ```
+
+`survived` is of mode numeric, while one would expect it to be a categorical variable
+of mode character. `age` is of mode character, while one would expect it to be of
+mode numeric
 
 ## Exercise 4: some columns summarized
 
@@ -159,6 +165,8 @@ tail(titanic, 10)
 
 What do you observe?
 
+**Answer**: First and last to rows are shown. Not all columns are shown. 
+
 b.  The `readxl` package that is used to import the data stores the data as a `tibble`, which is a special type of format on top of the `data.frame` format to store data in R. Override the `tibble` format using the function `as.data.frame`.
 
 ```{r}
@@ -166,18 +174,23 @@ b.  The `readxl` package that is used to import the data stores the data as a `t
 titanic <- as.data.frame(titanic)
 ```
 
-Run the `head` and `tail` functions again.
+Run the `head` and `tail` functions again. What has changed?
 
 ```{r}
 head(titanic, 10)
 tail(titanic, 10)
 ```
 
+**Answer**: All columns are shown. 
+
 c.  Summarize the whole dataset using the `summary` function. What do you observe for each of the variables?
 
 ```{r summary}
 summary(titanic)
 ```
+
+Many are of class and mode character, and the `summary` function does not give any
+information. The `dob` variable has negative values.
 
 d.  Compute the 5%, 25%, 50%, 75% and 95% quantiles, the inter-quartile range and the standard deviation for age and fare. You may have to take a look at the `help` files for the functions `quantile`, `IQR` and `sd`.
 
@@ -232,6 +245,8 @@ It is seen that there is one person from Uruguay in this group. Select the singl
 subset(titanic, name=="Artagaveytia, Mr. Ramon")
 ```
 
+**Answer**: the person did not travel with relatives
+
 b.  Make a table of survivor status by sex, but only for the first class passengers. What do you observe? Compare this with the survival status for the 3rd class passengers.
 
 ```{r}
@@ -240,6 +255,9 @@ first
 third <- xtabs(~sex+survived, data=titanic, subset=(pclass=="3rd"))
 third
 ```
+
+**Answer**: females were much more likely to survive than males, especially among
+those who travelled first class
 
 ## Exercise 6: make factor variables
 
@@ -257,6 +275,8 @@ c.  Run the `summary` function again. What change do you observe compared to Exe
 summary(titanic)
 ```
 
+**Answer**: Passenger class and sex are summarized properly, and status is summarized
+as a categorical variable.
 
 ## Exercise 7: working with dates
 
@@ -267,12 +287,15 @@ a.  The variable `dob` gives the date of birth, using days since January 1st, 19
 titanic$dob <- as.Date(titanic$dob, origin = "1960/1/1")
 ```
 
-b.  The default display is "year/month/day". Make a table of the day of the month that the passengers were born, using the `format` function.
+b.  The default display is "year/month/day". Make a table of the day of the month
+that the passengers were born, using the `format` function. What do you observe?
 
 ```{r}
 #| echo: true
 table(format(titanic$dob, "%d"))
 ```
+
+**Answer**: All have a day in the middle of the month
 
 c.  What was the earliest date of birth among all the passengers on the boat. Does
 this correspond to the age of the oldest person on the date that the ship sank (April

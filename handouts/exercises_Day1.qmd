@@ -135,14 +135,15 @@ b.  The `readxl` package that is used to import the data stores the data as a `t
 titanic <- as.data.frame(titanic)
 ```
 
-Run the `head` and `tail` functions again.
+Run the `head` and `tail` functions again. What has changed?
 
 ```{r}
 head(titanic, 10)
 tail(titanic, 10)
 ```
 
-c.  Summarize the whole dataset using the `summary` function. What do you observe for each of the variables?
+c.  Summarize the whole dataset using the `summary` function. What do you observe for
+each of the variables? 
 
 ```{r summary}
 summary(titanic)
@@ -169,20 +170,18 @@ e.  For categorical variables, `summary` is not very informative. Use the `table
 table(titanic$pclass)
 table(titanic$sex)
 table(titanic$sex, titanic$survived)
-# has no added value because no missings
+# # argument useNA has no added value because there are no missings in sex and survived
 table(titanic$sex, titanic$survived, useNA = "always")
 ```
 
 f.  The function `addmargins` adds the row sums and the column sums to the table of survival status by sex. The function `proportions` tabulates proportions instead of absolute numbers.
-
 ```{r}
 #| echo: true
 addmargins(table(titanic$sex, titanic$survived))
 proportions(table(titanic$sex, titanic$survived))
 ```
-
-Use the `proportions` function to compute the fraction (or percentage) of survivors by sex.
-
+Use the `proportions` function to compute the fraction (or percentage) of survivors
+by sex. Have a look at the help file if needed. 
 ```{r}
 ## basic tables
 proportions(table(titanic$sex, titanic$survived), margin = 2)
@@ -235,7 +234,8 @@ a.  The variable `dob` gives the date of birth, using days since January 1st, 19
 titanic$dob <- as.Date(titanic$dob, origin = "1960/1/1")
 ```
 
-b.  The default display is "year/month/day". Make a table of the day of the month that the passengers were born, using the `format` function.
+b.  The default display is "year/month/day". Make a table of the day of the month
+that the passengers were born, using the `format` function. What do you observe?
 
 ```{r}
 table(format(titanic$dob, "%d"))
