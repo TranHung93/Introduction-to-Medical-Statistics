@@ -359,7 +359,7 @@ code.r
 #| eval: FALSE
 #| code-line-numbers: "2"
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size))
+  geom_point(aes(size = pop))
 ```
 :::
 :::
@@ -372,7 +372,7 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 #| fig-height: 5
 #| out-width: "100%"
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size))
+  geom_point(aes(size = pop))
 ```
 
 :::
@@ -391,7 +391,7 @@ code.r
 #| eval: FALSE
 #| code-line-numbers: "2"
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color))
+  geom_point(aes(size = pop, color = region))
 ```
 :::
 :::
@@ -404,7 +404,7 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 #| fig-height: 5
 #| out-width: "100%"
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color))
+  geom_point(aes(size = pop, color = region))
 ```
 
 :::
@@ -423,7 +423,7 @@ code.r
 #| eval: FALSE
 #| code-line-numbers: "3"
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color)) +
+  geom_point(aes(size = pop, color = region)) +
   geom_text(aes(label = country))
 ```
 :::
@@ -437,7 +437,7 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 #| fig-height: 5
 #| out-width: "100%"
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color)) +
+  geom_point(aes(size = pop, color = region)) +
   geom_text(aes(label = country))
 ```
 
@@ -463,7 +463,7 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 #| fig-height: 5
 #| out-width: "100%"
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color)) +
+  geom_point(aes(size = pop, color = region)) +
   geom_text(aes(label = country))
 ```
 
@@ -542,12 +542,12 @@ code.r
 #| eval: FALSE
 #| code-line-numbers: false
 cols <- c(
-  "red" = "#fa8495",
-  "green" = "#4ca258",
-  "darkblue" = "#6493bb",
-  "yellow" = "#d7c968",
-  "blue" = "#7dd8f3",
-  "purple" = "#bc5c91"
+  "Central Europe, Eastern Europe and Central Asia" = "#fa8495",
+  "Latin America and Caribbean" = "#4ca258",
+  "North Africa and Middle East" = "#6493bb",
+  "South Asia" = "#d7c968",
+  "Southeast Asia, East Asia and Oceania" = "#7dd8f3",
+  "Sub-Saharan Africa" = "#bc5c91"
 )
 
 # 1. Don't try to write and run everything at once
@@ -555,7 +555,7 @@ cols <- c(
 # 3. If something goes wrong, it's easier to fix
 
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color), alpha = 0.8) +
+  geom_point(aes(size = pop, color = region), alpha = 0.8) +
   geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) +
   geom_vline(xintercept = 0, color = "#999999") +
   geom_hline(yintercept = 0, color = "#999999") +
@@ -563,22 +563,13 @@ ggplot(df, aes(x = coverage, y = inequality)) +
                      limits = c(-0.4, 0.55)) +
   scale_y_continuous(breaks = c(-0.1, 0, 0.1), limits = c(-0.16, 0.1)) +
   scale_size_continuous(
-    breaks = c(2, 4, 6, 8),
+    breaks = c(50, 100, 150, 200),
     labels = c("50 million", "100 million", "150 million", "200 million"),
     range = c(0, 8),
     guide = guide_legend(order = 1)
   ) +
   scale_color_manual(
     values = cols,
-    breaks = c("red", "green", "darkblue", "yellow", "blue", "purple"),
-    labels = c(
-      "Central Europe, Eastern Europe and Central Asia",
-      "Latin America and Caribbean",
-      "North Africa and Middle East",
-      "South Asia",
-      "Southeast Asia, East Asia and Oceania",
-      "Sub-Saharan Africa"
-    ),
     guide = guide_legend(order = 2)
   ) +
   labs(x = "Change in MCV1 coverage (2019-2000)",
@@ -606,16 +597,20 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 #| fig-height: 6.7
 #| out-width: "100%"
 cols <- c(
-  "red" = "#fa8495",
-  "green" = "#4ca258",
-  "darkblue" = "#6493bb",
-  "yellow" = "#d7c968",
-  "blue" = "#7dd8f3",
-  "purple" = "#bc5c91"
+  "Central Europe, Eastern Europe and Central Asia" = "#fa8495",
+  "Latin America and Caribbean" = "#4ca258",
+  "North Africa and Middle East" = "#6493bb",
+  "South Asia" = "#d7c968",
+  "Southeast Asia, East Asia and Oceania" = "#7dd8f3",
+  "Sub-Saharan Africa" = "#bc5c91"
 )
 
+# 1. Don't try to write and run everything at once
+# 2. Add one small piece at a time
+# 3. If something goes wrong, it's easier to fix
+
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color), alpha = 0.8) +
+  geom_point(aes(size = pop, color = region), alpha = 0.8) +
   geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) +
   geom_vline(xintercept = 0, color = "#999999") +
   geom_hline(yintercept = 0, color = "#999999") +
@@ -623,22 +618,13 @@ ggplot(df, aes(x = coverage, y = inequality)) +
                      limits = c(-0.4, 0.55)) +
   scale_y_continuous(breaks = c(-0.1, 0, 0.1), limits = c(-0.16, 0.1)) +
   scale_size_continuous(
-    breaks = c(2, 4, 6, 8),
+    breaks = c(50, 100, 150, 200),
     labels = c("50 million", "100 million", "150 million", "200 million"),
     range = c(0, 8),
     guide = guide_legend(order = 1)
   ) +
   scale_color_manual(
     values = cols,
-    breaks = c("red", "green", "darkblue", "yellow", "blue", "purple"),
-    labels = c(
-      "Central Europe, Eastern Europe and Central Asia",
-      "Latin America and Caribbean",
-      "North Africa and Middle East",
-      "South Asia",
-      "Southeast Asia, East Asia and Oceania",
-      "Sub-Saharan Africa"
-    ),
     guide = guide_legend(order = 2)
   ) +
   labs(x = "Change in MCV1 coverage (2019-2000)",
@@ -677,16 +663,20 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 #| fig-height: 6.7
 #| out-width: "100%"
 cols <- c(
-  "red" = "#fa8495",
-  "green" = "#4ca258",
-  "darkblue" = "#6493bb",
-  "yellow" = "#d7c968",
-  "blue" = "#7dd8f3",
-  "purple" = "#bc5c91"
+  "Central Europe, Eastern Europe and Central Asia" = "#fa8495",
+  "Latin America and Caribbean" = "#4ca258",
+  "North Africa and Middle East" = "#6493bb",
+  "South Asia" = "#d7c968",
+  "Southeast Asia, East Asia and Oceania" = "#7dd8f3",
+  "Sub-Saharan Africa" = "#bc5c91"
 )
 
+# 1. Don't try to write and run everything at once
+# 2. Add one small piece at a time
+# 3. If something goes wrong, it's easier to fix
+
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color), alpha = 0.8) +
+  geom_point(aes(size = pop, color = region), alpha = 0.8) +
   geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) +
   geom_vline(xintercept = 0, color = "#999999") +
   geom_hline(yintercept = 0, color = "#999999") +
@@ -694,22 +684,13 @@ ggplot(df, aes(x = coverage, y = inequality)) +
                      limits = c(-0.4, 0.55)) +
   scale_y_continuous(breaks = c(-0.1, 0, 0.1), limits = c(-0.16, 0.1)) +
   scale_size_continuous(
-    breaks = c(2, 4, 6, 8),
+    breaks = c(50, 100, 150, 200),
     labels = c("50 million", "100 million", "150 million", "200 million"),
     range = c(0, 8),
     guide = guide_legend(order = 1)
   ) +
   scale_color_manual(
     values = cols,
-    breaks = c("red", "green", "darkblue", "yellow", "blue", "purple"),
-    labels = c(
-      "Central Europe, Eastern Europe and Central Asia",
-      "Latin America and Caribbean",
-      "North Africa and Middle East",
-      "South Asia",
-      "Southeast Asia, East Asia and Oceania",
-      "Sub-Saharan Africa"
-    ),
     guide = guide_legend(order = 2)
   ) +
   labs(x = "Change in MCV1 coverage (2019-2000)",
@@ -764,7 +745,8 @@ simulated_covid <- readRDS("data/simulated_covid.rds")
 simulated_covid
 ```
 
-## Some frequently used `geom_*`
+## Some frequently used `geom_*`
+
 
 ::: {.r-fit-text}
 **Example:** creating a bar chart for number of covid incidence over time 
@@ -1314,16 +1296,16 @@ You have seen this in action before!
 
 ```{.r}
 cols <- c(
-  "red" = "#fa8495",
-  "green" = "#4ca258",
-  "darkblue" = "#6493bb",
-  "yellow" = "#d7c968",
-  "blue" = "#7dd8f3",
-  "purple" = "#bc5c91"
+  "Central Europe, Eastern Europe and Central Asia" = "#fa8495",
+  "Latin America and Caribbean" = "#4ca258",
+  "North Africa and Middle East" = "#6493bb",
+  "South Asia" = "#d7c968",
+  "Southeast Asia, East Asia and Oceania" = "#7dd8f3",
+  "Sub-Saharan Africa" = "#bc5c91"
 )
 
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color), alpha = 0.8) +
+  geom_point(aes(size = pop, color = region, alpha = 0.8)) +
   geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) +
   geom_vline(xintercept = 0, color = "#999999") +
   geom_hline(yintercept = 0, color = "#999999") +
@@ -1331,22 +1313,13 @@ ggplot(df, aes(x = coverage, y = inequality)) +
                      limits = c(-0.4, 0.55)) +
   scale_y_continuous(breaks = c(-0.1, 0, 0.1), limits = c(-0.16, 0.1)) +
   scale_size_continuous(
-    breaks = c(2, 4, 6, 8),
+    breaks = c(50, 100, 150, 200),
     labels = c("50 million", "100 million", "150 million", "200 million"),
     range = c(0, 8),
     guide = guide_legend(order = 1)
   ) +
   scale_color_manual(
     values = cols,
-    breaks = c("red", "green", "darkblue", "yellow", "blue", "purple"),
-    labels = c(
-      "Central Europe, Eastern Europe and Central Asia",
-      "Latin America and Caribbean",
-      "North Africa and Middle East",
-      "South Asia",
-      "Southeast Asia, East Asia and Oceania",
-      "Sub-Saharan Africa"
-    ),
     guide = guide_legend(order = 2)
   ) +
   labs(x = "Change in MCV1 coverage (2019-2000)",
@@ -1367,7 +1340,7 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 
 ```{.r}
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color), alpha = 0.8) +
+  geom_point(aes(size = pop, color = region), alpha = 0.8) +
   geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) 
 ```
 
@@ -1375,16 +1348,16 @@ ggplot(df, aes(x = coverage, y = inequality)) +
 #| eval: true
 #| echo: false
 cols <- c(
-  "red" = "#fa8495",
-  "green" = "#4ca258",
-  "darkblue" = "#6493bb",
-  "yellow" = "#d7c968",
-  "blue" = "#7dd8f3",
-  "purple" = "#bc5c91"
+  "Central Europe, Eastern Europe and Central Asia" = "#fa8495",
+  "Latin America and Caribbean" = "#4ca258",
+  "North Africa and Middle East" = "#6493bb",
+  "South Asia" = "#d7c968",
+  "Southeast Asia, East Asia and Oceania" = "#7dd8f3",
+  "Sub-Saharan Africa" = "#bc5c91"
 )
 
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color), alpha = 0.8) +
+  geom_point(aes(size = pop, color = region), alpha = 0.8) +
   geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) +
   geom_vline(xintercept = 0, color = "#999999") +
   geom_hline(yintercept = 0, color = "#999999") +
@@ -1392,22 +1365,13 @@ ggplot(df, aes(x = coverage, y = inequality)) +
                      limits = c(-0.4, 0.55)) +
   scale_y_continuous(breaks = c(-0.1, 0, 0.1), limits = c(-0.16, 0.1)) +
   scale_size_continuous(
-    breaks = c(2, 4, 6, 8),
+    breaks = c(50, 100, 150, 200),
     labels = c("50 million", "100 million", "150 million", "200 million"),
     range = c(0, 8),
     guide = guide_legend(order = 1)
   ) +
   scale_color_manual(
     values = cols,
-    breaks = c("red", "green", "darkblue", "yellow", "blue", "purple"),
-    labels = c(
-      "Central Europe, Eastern Europe and Central Asia",
-      "Latin America and Caribbean",
-      "North Africa and Middle East",
-      "South Asia",
-      "Southeast Asia, East Asia and Oceania",
-      "Sub-Saharan Africa"
-    ),
     guide = guide_legend(order = 2)
   ) +
   labs(x = "Change in MCV1 coverage (2019-2000)",
@@ -1430,46 +1394,37 @@ What happens if we do it like this:
 
 ```{.r}
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color, alpha = 0.8)) +
+  geom_point(aes(size = pop, color = region, alpha = 0.8)) +
   geom_text(aes(label = country, hjust = -0.2, vjust = 0.2)) 
 ```
 
 ```{r}
 #| echo: false
 cols <- c(
-  "red" = "#fa8495",
-  "green" = "#4ca258",
-  "darkblue" = "#6493bb",
-  "yellow" = "#d7c968",
-  "blue" = "#7dd8f3",
-  "purple" = "#bc5c91"
+  "Central Europe, Eastern Europe and Central Asia" = "#fa8495",
+  "Latin America and Caribbean" = "#4ca258",
+  "North Africa and Middle East" = "#6493bb",
+  "South Asia" = "#d7c968",
+  "Southeast Asia, East Asia and Oceania" = "#7dd8f3",
+  "Sub-Saharan Africa" = "#bc5c91"
 )
 
 ggplot(df, aes(x = coverage, y = inequality)) +
-  geom_point(aes(size = size, color = color, alpha = 0.8)) +
-  geom_text(aes(label = country, hjust = -0.2, vjust = 0.2)) +
+  geom_point(aes(size = pop, color = region, alpha = 0.8)) +
+  geom_text(aes(label = country), hjust = -0.2, vjust = 0.2) +
   geom_vline(xintercept = 0, color = "#999999") +
   geom_hline(yintercept = 0, color = "#999999") +
   scale_x_continuous(breaks = c(-0.25, 0, 0.25, 0.5),
                      limits = c(-0.4, 0.55)) +
   scale_y_continuous(breaks = c(-0.1, 0, 0.1), limits = c(-0.16, 0.1)) +
   scale_size_continuous(
-    breaks = c(2, 4, 6, 8),
+    breaks = c(50, 100, 150, 200),
     labels = c("50 million", "100 million", "150 million", "200 million"),
     range = c(0, 8),
     guide = guide_legend(order = 1)
   ) +
   scale_color_manual(
     values = cols,
-    breaks = c("red", "green", "darkblue", "yellow", "blue", "purple"),
-    labels = c(
-      "Central Europe, Eastern Europe and Central Asia",
-      "Latin America and Caribbean",
-      "North Africa and Middle East",
-      "South Asia",
-      "Southeast Asia, East Asia and Oceania",
-      "Sub-Saharan Africa"
-    ),
     guide = guide_legend(order = 2)
   ) +
   labs(x = "Change in MCV1 coverage (2019-2000)",
