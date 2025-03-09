@@ -51,6 +51,7 @@ But it takes
 - effort; trial and error
 - time
 
+to make a "good" one
 :::
 :::::: 
 
@@ -166,13 +167,14 @@ meaningful; one can write grammatically correct nonsense
   - Does not advise on the best choice of scale (linear, logarithmic), color or line
     type; one can create noninformative graphs
 
+::: {.fragment .fade-in .highlight-red}
 - Grammar helps expressing ideas or information in a clear and coherent way
+:::
 
+## Main components of a graph (R) 
 
-## Main components of a graph (R) {.smaller}
-
-- Mapping from data to <span style="color:red;">aesthetic attributes</span> of <span
-  style="color:red;">geometric objects</span>
+- Mapping from information (data) to <span style="color:red;">aesthetic
+  attributes</span> of <span style="color:red;">geometric objects</span>
 
 - <span style="color:red;">Geometic objects</span>: what you see on the plot (points, lines, bars)
 
@@ -491,9 +493,8 @@ location (often along x-axis and y-axis), colour, size, shape
 
 ## Statistical transformation 
 
-Creation of a geometric object may be preceded by a statistical transformation
 
--   Value transformation (logarithm)
+-   Value transformation (e.g. logarithm)
 
 -   Histogram: statistical transformation "sum" or
     "percentage/frequency" before geometric object "bar" is used
@@ -1130,16 +1131,21 @@ location (often along x-axis and y-axis), colour, size, shape
 
 - Scales: map data values to aesthetic attibutes
 
-- Coordinate system: cartesian, polar, map projections.
+::: {.fragment}
+
+- <span style="color:red;">Coordinate system</span>: 
+  cartesian, polar, map projections.
 
   Networks, trees have no coordinate system
+:::
 
+::: {.fragment}
 - Not about:
-  -  [graph type](https://www.data-to-viz.com/); ($\approx$
+  -  [graph type](https://www.data-to-viz.com/) ($\approx$
 language, words)
   -  font size, background colour ... Some of these are specified
 in a <span style="color:red;">theme</span>
-
+:::
 ## Polar coordinate system
 
 Pie chart WHO European Health Report 2009

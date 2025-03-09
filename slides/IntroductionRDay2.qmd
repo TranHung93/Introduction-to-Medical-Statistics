@@ -145,9 +145,6 @@ What would you like to change to make it good enough for publication?
 *Some possible changes: change labels along axes, rotate numbers along y-axis, add regression line, rescale fare*
 ::: 
 
-## Use base graphics for simple tasks
-
-Example: explain logarithmic scale via graph
 
 ## Arguments and parameters that can be changed {.smaller}
 
