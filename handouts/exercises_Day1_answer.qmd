@@ -54,6 +54,17 @@ vec[index]
 a.  Use the elementary functions `/`, `-`, `^` and the function `sum` to calculate the mean $$\bar{x}=\sum_{i=1}^n x_i/n$$ and the standard deviation $$\sqrt{\sum_{i=1}^{n}(x_i-\bar{x})^2/(n-1)}$$ of the fare paid by the titanic passengers. 
 b.  Verify your answer by using the built-in R functions `mean` and `sd`.
 
+We create the data set  that we used in the web based interface.
+
+```{r}
+titanic <- data.frame(
+    pclass=rep(c("1st","2nd","3rd"),c(4,2,4)),
+    survived=c(1,0,0,0,1,1,0,0,0,0),
+    name=c("Allison, Master. Hudson Trevor","Dulles, Mr. William Crothers","McCarthy, Mr. Timothy J","Walker, Mr. William Anderson", "Duran y More, Miss. Asuncion", "Mellinger, Miss. Madeleine Viol","Abbott, Master. Eugene Joseph", "Calic, Mr. Petar","Flynn, Mr. James", "Johnston, Miss. Catherine Helen"),
+    age= c(0.9167,39,54,47,27,13,13,17,NA,NA),
+	fare=c(151.55,29.7,51.8625,34.0208,13.8583,19.5,20.25,8.6625,7.75,23.4))
+```
+
 ```{r}
 # a.
 fare <- titanic$fare
@@ -133,7 +144,8 @@ c.  Use the `str` function to obtain a summary of the basic characteristics per 
 
 ```{r}
 str(titanic)
-mode(titanic)
+mode(titanic$survived)
+mode(titanic$age)
 ```
 
 `survived` is of mode numeric, while one would expect it to be a categorical variable
@@ -229,7 +241,7 @@ Use the `proportions` function to compute the fraction (or percentage) of surviv
 
 ```{r}
 ## basic tables
-proportions(table(titanic$sex, titanic$survived), margin = 2)
+proportions(table(titanic$sex, titanic$survived), margin = 1)
 ```
 ## Exercise 5: work with subsets
 
@@ -307,3 +319,5 @@ min(titanic$dob, na.rm = TRUE)
 max(titanic$age, na.rm = TRUE)
 min(titanic$dob, na.rm = TRUE) + max(titanic$age, na.rm = TRUE) * 365.25
 ```
+
+Yes, it does correspond

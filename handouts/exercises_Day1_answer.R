@@ -59,10 +59,19 @@ vec[index]
 
 ## Exercise 2
 fare <- titanic$fare
+fare
+sum(fare)
+length(fare) # has value 10
+sum(fare)/length(fare) # first compute the sum, divide by 10
+fare/length(fare)
+sum(fare/length(fare)) # first divide each value by 10, then compute the sum
+mean(fare)
 MeanFare <- sum(fare)/length(fare)
 MeanFare
 mean(fare)
 # Calculate the standard deviation in three (baby) steps
+fare-MeanFare
+(fare-MeanFare)^2
 numerator <- sum((fare-MeanFare)^2)
 denominator <- (length(fare)-1)
 StdFare  <- sqrt(numerator/denominator)
@@ -124,7 +133,8 @@ titanic <- read_excel("data/raw/Titanic3.xlsx")
 ## Exercise 3
 dim(titanic)
 str(titanic)
-mode(titanic)
+mode(titanic$survived)
+mode(titanic$age)
 
 
 ## Exercise 4
@@ -156,7 +166,7 @@ table(titanic$sex, titanic$survived, useNA = "always")
 ## f.
 addmargins(table(titanic$sex, titanic$survived))
 proportions(table(titanic$sex, titanic$survived))
-proportions(table(titanic$sex, titanic$survived), margin = 2)
+proportions(table(titanic$sex, titanic$survived), margin = 1)
 
 
 ## Exercise 5
