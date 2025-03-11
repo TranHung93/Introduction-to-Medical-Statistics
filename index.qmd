@@ -112,7 +112,7 @@ Please follow [this handout](handouts/precourse_setup.qmd){target="_blank"} befo
   - Write papers with reproducible tables and figures using Quarto
   - Generate reports in multiple formats: Word, PDF, slides, web pages…
   - Easily update analyses when new data becomes available
-- [Exercises]{style="cursor:not-allowed;user-select:none;"}
+- [Exercises](handouts/exercises_Day5.qmd){style="cursor:not-allowed;user-select:none;"}
 - [Exercise answer keys]{style="cursor:not-allowed;user-select:none;"}
 
 # Appendix
