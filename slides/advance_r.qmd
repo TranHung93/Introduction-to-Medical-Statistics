@@ -27,8 +27,8 @@ library(tidyverse)
 **Afternoon**:
 
 - Transforming `tibble`s
-  - Column manipulation (mutate, rename, if else)
-  - Type assignment (as.*)
+  - Column manipulation
+  - Type assignment
 - Joining `tibble`s
 - Vectorisation in R with `map()` (for loop)
 
