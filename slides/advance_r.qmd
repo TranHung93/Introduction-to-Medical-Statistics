@@ -9,24 +9,28 @@ toc: false
 number-sections: false
 ---
 
+```{r}
+#| echo: false
+library(tidyverse)
+```
+
 ## Topic overview {.scrollable}
 
-What will be covered:
+**Morning**:
 
-**Data manipulation in R with `tidyverse`**
+- Into the `tidyverse`
+- Data ingestion
+- Pivot `tibble`s into long and wide formats
+- How to handle `NA`s
+- Select columns
 
-- *Morning*:
-  - Into the `tidyverse`
-  - Data ingestion
-  - Handling NAs (drop_na, filter)
-  - Pivotting `tibble`s into long and wide formats
+**Afternoon**:
 
-- *Afternoon*:
-  - Transforming `tibble`s
-    - Column manipulation (mutate, rename, if else)
-    - Type assignment (as.*)
-  - Joining `tibble`s
-  - Vectorisation in R with `map()` (for loop)
+- Transforming `tibble`s
+  - Column manipulation (mutate, rename, if else)
+  - Type assignment (as.*)
+- Joining `tibble`s
+- Vectorisation in R with `map()` (for loop)
 
 
 *Appendix*
@@ -55,7 +59,24 @@ What will be covered:
 - A `tibble` is a similar to a dataframe in **base R**
 - Difference:
   - `tibble` looks different when printed out
-  - seamless integration with *every* function in the `tidyverse` ()
+  - seamless integration with *every* function in the `tidyverse`
+  - and more...
+
+## Into the `tidyverse` {.scrollable}
+
+Difference between a `data.frame` and a `tibble`
+
+::: {.fragment}
+```{r}
+mtcars
+```
+:::
+
+::: {.fragment}
+```{r}
+rownames_to_column(mtcars, var = "model") |> as_tibble()
+```
+:::
 
 
 ## Tidy data
@@ -91,6 +112,11 @@ tibble::tribble(
 )
 ```
 
+## Tidy data
+
+- R object type: `data.frame` or `tibble`
+- Data structure: tidy or untidy data
+
 ## Why `tidyverse`?
 
 ::: {.callout-important}
@@ -109,7 +135,8 @@ tibble::tribble(
 - `dplyr::select()` to select columns from a `tibble`
 - `dplyr::mutate()` to modify and create columns in a `tibble`
 - `dplyr::*_join()` to join `tibble`s in a specified method
-- `tidyr::pivot_*longer*()` to transform a `tibble` from wide to long format (less columns, more rows)
+- `tidyr::pivot_longer()` to transform a `tibble` from wide to long format (less columns, more rows)
+- `tidyr::pivot_wider()` to transform a `tibble` from long to wide format (less rows, more columns)
 - `purrr::map()` to performing vectorisation of function on vectors in R
 :::
 
@@ -266,7 +293,7 @@ plot_dat |>
   geom_col()
 ```
 
-# Data ingestion
+# Data manipulation with `tidyverse`
 
 ## Data ingestion
 
@@ -276,50 +303,158 @@ plot_dat |>
 
 ::: {.incremental}
 - Data comes in different formats (.xlsx, .csv, .tsv)
-- `readr` is a package for reading **rectangular table text** files
+- `readr` is a package for reading **rectangular text data** files
 - `readxl` is a package for reading Excel files
+- Both packages automatically read the data into a `tibble`
 :::
 
-## Before we start {.scrollable}
+## Data ingestion {.scrollable}
 
 - Create a new R script
-- Import `tidyverse` (or install first if you don't have it) and `readxl`
-- Import the `Titanic3.xlsx` dataset
+- Import `tidyverse`
+- Load the [`covid_cases.csv`]("https://raw.githubusercontent.com/OUCRU-Modelling/R-training-2025/refs/heads/main/slides/data/covid_cases.csv") data
 
 ```{r}
 # install.packages("tidyverse")
-# install.packages("readxl")
 library(tidyverse)
-library(readxl)
 
-titanic_df <- read_excel("data/Titanic3.xlsx")
+covid_cases <- read_csv("data/covid_cases.csv")
 
-# check if `titanic_df` is a tibble
-# (`read_excel()` is part of the `tidyverse` so it automatically converts the dataset into a `tibble`)
-is_tibble(titanic_df)
+# check if `covid_cases` is a tibble
+# (`read_csv()` is part of the `tidyverse` so it automatically converts the dataset into a `tibble`)
+is_tibble(covid_cases)
 
-titanic_df
+covid_cases
 ```
+
+## Data ingestion {.scrollable}
+
+- You can quickly skim at the data using the `skimr` package
+
+```{r}
+# install.packages("skimr")
+skimr::skim(covid_cases)
+```
+
+## Pivot `tibble`s {.scrollable}
+
+- Does this data follow the *tidy data* principle?
+```{r}
+covid_cases
+```
+
+:::{.fragment}
+- What do we want? Less columns more rows -> We want to pivot it **longer**
+:::
+
+## Pivot `tibble`s
+
+- Let's use `pivot_longer()` to turn our data into tidy data
+
+::: {.fragment}
+```{r}
+covid_cases <- covid_cases |> 
+  pivot_longer(
+    cols = -date,
+    names_to = "country", 
+    names_pattern = "cases_(.+)",
+    values_to = "cases"
+  )
+covid_cases
+```
+:::
+
+
+## Pivot `tibble`s {.scrollable}
+
+- Now that the data is a tidy data `tibble`, let's take a look at it again
+
+::: {.fragment}
+```{r}
+skimr::skim(covid_cases)
+```
+:::
+
+## Handling `NA`s
+
+::: {.incremental}
+- Let's check the `NA` in `cases`
+- You can filter your `tibble` with... `filter()`
+:::
+
+:::{.fragment}
+```{r}
+covid_cases |> filter(is.na(cases))
+```
+
+:::
+
+## Handling `NA`s
+
+- Make your decision:
+  - Remove rows with `NA`s
+  - Data imputation, i.e. replace the `NA`s with something that makes sense like mean, mode, median, interpolation,...
+  - Something else?
+
+## Handling `NA`s
+
+- Remove rows with `NA`s using `drop_na()`
+
+```{r}
+covid_cases |> drop_na()
+```
+
+## Handling `NA`s
+
+- You can further specify the column to drop `NA`s from
+
+```{r}
+covid_cases |> drop_na(cases)
+```
+
+## Handling `NA`s
+
+- You can perform data imputation with `mutate()`
+
+::: {.fragment}
+```{r}
+median_case <- median(covid_cases$cases, na.rm = TRUE)
+covid_no_na_cases <- covid_cases |> 
+  replace_na(list(cases = median_case))
+
+skimr::skim(covid_no_na_cases)
+```
+
+:::
 
 ## Select columns
 
 - You can select columns from a `tibble` with `select()`
 
 ```{r}
-titanic_df |> select(pclass, survived, sex, age)
+covid_cases |> select(country, cases)
 ```
 
 ## Select columns
 
 - You can *unselect* columns with the `-` operator
 ```{r}
-titanic_df |>
-  select(-sex, -age) |>
-  colnames()
+covid_cases |>
+  select(-country)
 
-titanic_df |>
-  select(-c(name, embarked, boat, body)) |>
-  colnames()
+covid_cases |>
+  select(-cases)
+```
+
+
+# Transforming `tibble`s
+
+## Before we start
+
+```{r}
+# install.packages("readxl")
+library(readxl)
+titanic_df <- read_excel("data/Titanic3.xlsx")
 ```
 
 ## Create and/or modify columns {.scrollable}
@@ -456,7 +591,7 @@ class(c(12, 13, 14))
 
 ::: {.fragment}
 ```{r}
-covid_cases <- readr::read_rds("data/covid_cases.rds") %>% 
+covid_cases <- readr::read_rds("data/covid_cases.rds") |> 
   pivot_longer(
     cols = -date,
     names_to = "country", 
