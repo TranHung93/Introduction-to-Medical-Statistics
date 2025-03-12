@@ -505,6 +505,14 @@ titanic_df |>
   )
 ```
 
+## Create and/or modify columns {.scrollable}
+
+- To simply rename columns, you can use `rename()`
+
+```{r}
+titanic_df |> rename(passenger_class = pclass)
+```
+
 ## Joining `tibble`s
 
 ![](figures/tibble_joinings.svg)
@@ -591,27 +599,27 @@ class(c(12, 13, 14))
 
 ::: {.fragment}
 ```{r}
-covid_cases <- readr::read_rds("data/covid_cases.rds") |> 
-  pivot_longer(
-    cols = -date,
-    names_to = "country", 
-    names_pattern = "cases_(.+)",
-    values_to = "cases"
-  )
+# covid_cases <- readr::read_rds("data/covid_cases.rds") |> 
+#   pivot_longer(
+#     cols = -date,
+#     names_to = "country", 
+#     names_pattern = "cases_(.+)",
+#     values_to = "cases"
+#   )
 str(covid_cases)
 ```
 :::
 
 ::: {.fragment}
--   `covid_cases` has 3 vectors:
-    -   `date` is a vector of dates
-    -   `country` is a vector of characters
-    -   `cases` is a vector of numbers
+- `covid_cases` has 3 vectors:
+  - `date` is a vector of dates
+  - `country` is a vector of characters
+  - `cases` is a vector of numbers
 :::
 
 ## What is a vector?
 
--   You can access vector elements with the `$` operator
+- You can access vector elements with the `$` operator
 
 ```{r}
 covid_cases$date[10000:10010]
@@ -621,7 +629,7 @@ covid_cases$cases[10000:10010]
 
 ## What is a vector? {.scrollable}
 
--   Or the `tidyverse` way with `dplyr::slice()` and `dplyr::pull()`
+- Or the `tidyverse` way with `dplyr::slice()` and `dplyr::pull()`
 
 ```{r}
 covid_cases |> slice(10000:10010) |> pull(date)
@@ -637,8 +645,8 @@ covid_cases |> slice(10000:10010) |> pull(cases)
 ## Vectorisation {.scrollable}
 
 ::: {.incremental}
--   Instead of going through each element and perform an action, we can *apply* an action to all elements at once
--   Example: Take the square root of a vector
+- Instead of going through each element and perform an action, we can *apply* an action to all elements at once
+- Example: Take the square root of a vector
 :::
 
 ::: {.fragment}
@@ -671,22 +679,23 @@ sqrt_data <- sapply(squared_data, sqrt)
 sqrt_data
 ```
 
-:::: {.callout-note}
+::: {.callout-note}
 Most functions math-related functions and operators in base R are already vectorised, e.g. `sqrt()`, `log()`, `exp()`, `+`, `-`, `*`, `/`
-::::
+:::
 :::
 
 ## Vectorisation
 
--   R has a **functional** style, which means vectorisation is more intuitive to write and read code
--   On a technical level:
-    -   R itself *might be slightly* faster when doing vectorisation, compared to for-loops
-    -   for more complex and time-consuming functions, it is easier to **paralellise** with vectorisation
+- R has a **functional** style, which means vectorisation is more intuitive to write and read code
+- On a technical level:
+  - R itself *might be slightly* faster when doing vectorisation, compared to for-loops
+  - for more complex and time-consuming functions, it is easier to **paralellise** with vectorisation
+
 
 ## Vectorisation
 
--   Vectorisation shines when there are more complex actions, and you have to write your own functions
--   Example: Assume that `data` is a vector of circle diameters, take its square roots and calculate the surface areas with vectorisation using `sapply()`
+- Vectorisation shines when there are more complex actions, and you have to write your own functions
+- Example: Assume that `data` is a vector of circle diameters, take its square roots and calculate the surface areas with vectorisation using `sapply()`
 
 ::: {.fragment}
 ```{r}
@@ -697,12 +706,6 @@ sapply(data, area_from_diameter)
 ```
 :::
 
-::: {.fragment}
-```{r}
-# alternatively
-sapply(data, \(d) 3.14 * (sqrt(d) / 2)^2)
-```
-:::
 
 ## Vectorisation with `map()`
 
@@ -713,7 +716,7 @@ sapply(data, \(d) 3.14 * (sqrt(d) / 2)^2)
 - Previous example using `map()`
 
 ```{r}
-map(data, \(d) 3.14 * (sqrt(d) / 2)^2) |> list_c()
+map(data, area_from_diameter) |> list_c()
 ```
 :::
 
@@ -730,7 +733,11 @@ We do `list_c()` after a `map()` because `map()` is designed to take in a `list`
 ```{r}
 data2 <- c(29, 37, 22, 35, 39, 29, 30, 33, 43, 36, 26)
 
-map2(data, data2, \(d, l) (3.14 * (sqrt(d) / 2)^2) + (l^2)) |> list_c()
+some_fn <- function(d, l){
+  return(3.14 * (sqrt(d) / 2)^2) + (l^2)
+}
+
+map2(data, data2, some_fn) |> list_c()
 ```
 :::
 
@@ -741,9 +748,13 @@ map2(data, data2, \(d, l) (3.14 * (sqrt(d) / 2)^2) + (l^2)) |> list_c()
 
 ::: {.fragment}
 ```{r}
+some_other_fn <- function(hp, wt){
+  h / (w / 2.205)
+}
+
 mtcars |> 
   mutate(
-    hp_p_wt = map2(hp, wt, \(h, w) h / (w / 2.205)) |> unlist(),
+    hp_p_wt = map2(hp, wt, some_other_fn) |> unlist(),
     .before = mpg
   )
 ```
@@ -751,10 +762,9 @@ mtcars |>
 
 
 
+# Appendix
 
-
-
-# Programming logics in R
+## Programming logics in R
 
 ## If-else
 
