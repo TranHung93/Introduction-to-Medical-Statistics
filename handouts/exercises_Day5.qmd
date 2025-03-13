@@ -240,12 +240,14 @@ covid_cases <- covid_cases |>
 tmp1 <- covid_cases |> 
   group_by(region) |> 
   summarise(total_cases = sum(cases), .groups = "drop")
+tmp1
 ```
 
 ```{r}
 tmp2 <- covid_cases |> 
   group_by(sub_region) |> 
   summarise(total_cases = sum(cases), .groups = "drop")
+tmp2
 ```
 
 - Write a short paragraph summarising key insights from the table, using **inline R code** to dynamically display case numbers. For example:
