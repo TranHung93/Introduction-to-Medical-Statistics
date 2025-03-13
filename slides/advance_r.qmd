@@ -312,7 +312,7 @@ plot_dat |>
 
 - Create a new R script
 - Import `tidyverse`
-- Load the [`covid_cases.csv`]("https://raw.githubusercontent.com/OUCRU-Modelling/R-training-2025/refs/heads/main/slides/data/covid_cases.csv") data
+- Load the [`covid_cases.csv`](https://raw.githubusercontent.com/OUCRU-Modelling/R-training-2025/refs/heads/main/slides/data/covid_cases.csv) data
 
 ```{r}
 # install.packages("tidyverse")
