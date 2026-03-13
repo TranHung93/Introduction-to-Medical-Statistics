@@ -11,9 +11,6 @@ date-format: "MMMM D, YYYY -- HH:mm:ss (z)"
 ---
 # Welcome to the OUCRU introduction to Medical Statistics 2026 {.unnumbered}
 
-## Course structure {.unnumbered}
-![](site_imgs/R_course_schedule.png)
-
 - [Time table](handouts/Agenda_StatCourse_23-27March2026.pdf)
 - The training will be **09:00 – 17:00 (UTC +7)** for everyday
 - There will be a **lunch break between 12:30 – 13:30 (UTC +7)**
@@ -22,17 +19,11 @@ date-format: "MMMM D, YYYY -- HH:mm:ss (z)"
 ## Contributors {.unnumbered}
 
 - Prof. Ronald Geskus, Biostatistics group, OUCRU HCM
-- Dr. Thinh Ong Phuc, Mathematical Modeling group, OUCRU HCM
-- Mr. Tuyen Huynh, Mathematical Modeling group, OUCRU HCM
-- Dr. Tran Thai Hung, Biostatistics group, OUCRU HCM
-- Ms. Anh Phan Truong Quynh, Mathematical Modeling group, OUCRU HCM
-- Dr. Hai Ho Bich, Emerging Infections group, OUCRU HCM
 - Dr. Duc Du Hong, Biostatistics group, OUCRU HCM
-- Mr. Manh Nguyen Duc, Mathematical Modeling group, OUCRU HCM
-- Mr. Nguyen Pham Nguyen The, Mathematical Modeling group, OUCRU HCM
-- Dr. Marc Choisy, Mathematical Modeling group, OUCRU HCM
-- Dr. Dung Vu Tien Viet, Biostatistician, OUCRU Hanoi
-- Dr. Trinh Dong Huu Khanh, formerly: Biostatistics group, OUCRU HCM
+- Dr. Hoang Van Thuan, Biostatistics group, OUCRU HCM
+- Dr. Nguyen Lam Vuong, Biostatistics group, OUCRU HCM
+- Dr. Tran Thai Hung, Biostatistics group, OUCRU HCM
+
 
 # Pre-course setups and requirements
 
