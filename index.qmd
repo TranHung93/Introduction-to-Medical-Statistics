@@ -10,7 +10,7 @@ date: last-modified
 date-format: "MMMM D, YYYY"
 ---
 
-# Welcome everyone! {.unnumbered}
+# Welcome! {.unnumbered}
 
 ::: {.column-margin}
 ### Course Objectives
